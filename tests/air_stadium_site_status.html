@@ -1,0 +1,1815 @@
+<!-- 学生网上预定 -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">
+<title>清华大学体育馆管理与网上预约系统</title>
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" id="main-theme-script">
+<link href="../css/themes/default.css" rel="stylesheet" id="theme-specific-script">
+<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link type="text/css" href="../page.css" rel="stylesheet" />
+<script type="text/javascript" src="../js/jquery/jquery-1.7.js" ></script>
+<link href="../css/simplenso.css" rel="stylesheet">
+<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js "></script>
+<script src="../scripts/jquery.cookie/jquery.cookie.js"></script>
+<script src="../scripts/simplenso/simplenso.js"></script>
+<script src="../My97DatePicker/WdatePicker.js"></script>
+
+<script src="../gymjs/gymcommon.js"></script>
+<script src="../gymjs/gymbook.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	initResourceTable(parent.limitBookDate,parent.limitBookCount,parent.time_date,parent.limitBookInit);
+
+		markStatusColor('4045704','上课','1','');
+
+		markStatusColor('4045706','上课','1','');
+
+		markStatusColor('4045708','上课','1','');
+
+		markStatusColor('4045710','上课','1','');
+
+		markStatusColor('4045712','学生','1','');
+
+		markStatusColor('4045714','学生','1','');
+
+		markStatusColor('4045716','校外','1','');
+
+		markStatusColor('4045718','校外','1','');
+
+		markStatusColor('4045720','学生','0','');
+
+		markStatusColor('4045726','学生','1','');
+
+		markStatusColor('4045728','学生','1','');
+
+		markStatusColor('4045732','上课','1','');
+
+		markStatusColor('4045734','上课','1','');
+
+		markStatusColor('4045736','上课','1','');
+
+		markStatusColor('4045738','上课','1','');
+
+		markStatusColor('4045740','学生','1','');
+
+		markStatusColor('4045742','学生','1','');
+
+		markStatusColor('4045744','校外','1','');
+
+		markStatusColor('4045746','校外','1','');
+
+		markStatusColor('4045748','学生','1','');
+
+		markStatusColor('4045752','学生','1','');
+
+		markStatusColor('4045754','学生','1','');
+
+		markStatusColor('4045760','上课','1','');
+
+		markStatusColor('4045762','上课','1','');
+
+		markStatusColor('4045764','上课','1','');
+
+		markStatusColor('4045766','上课','1','');
+
+		markStatusColor('4045768','学生','1','');
+
+		markStatusColor('4045770','学生','1','');
+
+		markStatusColor('4045772','校外','1','');
+
+		markStatusColor('4045774','校外','1','');
+
+		markStatusColor('4045776','学生','1','');
+
+		markStatusColor('4045788','上课','1','');
+
+		markStatusColor('4045790','上课','1','');
+
+		markStatusColor('4045792','上课','1','');
+
+		markStatusColor('4045794','上课','1','');
+
+		markStatusColor('4045796','学生','1','');
+
+		markStatusColor('4045798','学生','1','');
+
+		markStatusColor('4045800','学生','1','');
+
+		markStatusColor('4045802','学生','1','');
+
+		markStatusColor('4045804','学生','1','');
+
+		markStatusColor('4045816','上课','1','');
+
+		markStatusColor('4045818','上课','1','');
+
+		markStatusColor('4045820','上课','1','');
+
+		markStatusColor('4045822','上课','1','');
+
+		markStatusColor('4045824','学生','1','');
+
+		markStatusColor('4045826','老师','1','');
+
+		markStatusColor('4045828','老师','1','');
+
+		markStatusColor('4045830','校外','1','');
+
+		markStatusColor('4045832','校外','1','');
+
+		markStatusColor('4045834','学生','1','');
+
+		markStatusColor('4045844','上课','1','');
+
+		markStatusColor('4045846','上课','1','');
+
+		markStatusColor('4045848','上课','1','');
+
+		markStatusColor('4045850','上课','1','');
+
+		markStatusColor('4045852','学生','1','');
+
+		markStatusColor('4045854','老师','1','');
+
+		markStatusColor('4045856','老师','1','');
+
+		markStatusColor('4045858','校外','1','');
+
+		markStatusColor('4045860','校外','1','');
+
+		markStatusColor('4045866','学生','1','');
+
+		markStatusColor('4045868','学生','1','');
+
+		markStatusColor('4045869','学生','1','');
+
+		markStatusColor('4045872','上课','1','');
+
+		markStatusColor('4045874','上课','1','');
+
+		markStatusColor('4045876','上课','1','');
+
+		markStatusColor('4045878','上课','1','');
+
+		markStatusColor('4045880','学生','1','');
+
+		markStatusColor('4045882','老师','1','');
+
+		markStatusColor('4045884','老师','1','');
+
+		markStatusColor('4045886','老师','1','');
+
+		markStatusColor('4045888','老师','1','');
+
+		markStatusColor('4045894','学生','1','');
+
+		markStatusColor('4045896','学生','1','');
+
+		markStatusColor('4045897','学生','1','');
+
+		markStatusColor('4045900','上课','1','');
+
+		markStatusColor('4045902','上课','1','');
+
+		markStatusColor('4045904','上课','1','');
+
+		markStatusColor('4045906','上课','1','');
+
+		markStatusColor('4045908','老师','1','');
+
+		markStatusColor('4045910','老师','1','');
+
+		markStatusColor('4045912','学生','1','');
+
+		markStatusColor('4045914','老师','1','');
+
+		markStatusColor('4045916','老师','1','');
+
+		markStatusColor('5499706','学生','1','');
+
+		markStatusColor('4045918','上课','1','');
+
+		markStatusColor('4045920','上课','1','');
+
+		markStatusColor('4045922','上课','1','');
+
+		markStatusColor('4045924','上课','1','');
+
+		markStatusColor('4045925','上课','1','');
+
+		markStatusColor('4045926','上课','1','');
+
+		markStatusColor('4045928','上课','1','');
+
+		markStatusColor('4045930','上课','1','');
+
+		markStatusColor('4045932','上课','1','');
+
+		markStatusColor('4045934','上课','1','');
+
+		markStatusColor('4045936','老师','1','');
+
+		markStatusColor('4045938','老师','1','');
+
+		markStatusColor('4045940','学生','1','');
+
+		markStatusColor('4045942','老师','1','');
+
+		markStatusColor('4045944','老师','1','');
+
+		markStatusColor('5500056','上课','1','');
+
+		markStatusColor('4045946','上课','1','');
+
+		markStatusColor('4045948','上课','1','');
+
+		markStatusColor('4045950','上课','1','');
+
+		markStatusColor('4045952','上课','1','');
+
+		markStatusColor('4045953','上课','1','');
+
+		markStatusColor('4045954','上课','1','');
+
+		markStatusColor('4045956','上课','1','');
+
+		markStatusColor('4045958','上课','1','');
+
+		markStatusColor('4045960','上课','1','');
+
+		markStatusColor('4045962','上课','1','');
+
+		markStatusColor('4045964','训练','1','');
+
+		markStatusColor('4045966','训练','1','');
+
+		markStatusColor('4045968','学生','1','');
+
+		markStatusColor('4045970','学生','1','');
+
+		markStatusColor('4045972','学生','1','');
+
+		markStatusColor('5499978','上课','1','');
+
+		markStatusColor('4045974','上课','1','');
+
+		markStatusColor('4045976','上课','1','');
+
+		markStatusColor('4045978','上课','1','');
+
+		markStatusColor('4045980','上课','1','');
+
+		markStatusColor('4045981','上课','1','');
+
+		markStatusColor('4045982','上课','1','');
+
+		markStatusColor('4045984','上课','1','');
+
+		markStatusColor('4045986','上课','1','');
+
+		markStatusColor('4045988','上课','1','');
+
+		markStatusColor('4045990','上课','1','');
+
+		markStatusColor('4045992','训练','1','');
+
+		markStatusColor('4045994','训练','1','');
+
+		markStatusColor('4045996','学生','1','');
+
+		markStatusColor('4045998','学生','1','');
+
+		markStatusColor('4046000','学生','1','');
+
+		markStatusColor('5499785','上课','1','');
+
+		markStatusColor('4046002','上课','1','');
+
+		markStatusColor('4046004','上课','1','');
+
+		markStatusColor('4046006','上课','1','');
+
+		markStatusColor('4046008','上课','1','');
+
+		markStatusColor('4046009','上课','1','');
+
+		markStatusColor('4046010','上课','1','');
+
+		markStatusColor('4046012','上课','1','');
+
+		markStatusColor('4046014','上课','1','');
+
+		markStatusColor('4046016','上课','1','');
+
+		markStatusColor('4046018','上课','1','');
+
+		markStatusColor('4046020','学生','1','');
+
+		markStatusColor('4046022','学生','1','');
+
+		markStatusColor('4046024','学生','1','');
+
+		markStatusColor('4046026','学生','1','');
+
+		markStatusColor('4046028','学生','1','');
+
+		markStatusColor('5500367','上课','1','');
+
+});
+function markStatusColor(resId,userType,paymentStatus,present) {
+	//$("#resourceTd_"+resId).attr("userType",userType);
+	if(paymentStatus == '1'){
+		$("#resourceTd_"+resId).html("");
+		/* if(present == 'true') {
+			$("#resourceTd_"+resId).append("<font color='blue'>已到场</font>");
+		}else{
+			//$("#resourceTd_"+resId).append("<font color='green'>已交费</font>");
+		} */
+	}else{
+		$("#resourceTd_"+resId).html("<font color='red'>未交费</font>");
+	}
+}
+</script>
+</head>
+<!-- 显示预约情况的表格 -->
+<!-- 显示场馆资源的表格 -->
+
+<style type="text/css">
+
+#resourceTable {
+	border-collapse: collapse;
+	border-style:solid;
+  	border-width:3px;
+
+	vertical-align: middle;
+	font-size: 12px;
+	Table-layout: fixed;
+}
+
+#resourceTable th {
+	text-align: center;
+	padding: 0 0 0 0;
+	border-style:solid;
+	border-width:2px;
+	line-height: 20px;
+	word-wrap: break-word;
+	width: 5.5%;
+}
+
+#resourceTable td {
+	text-align: center;
+	padding: 0 0 0 0;
+	border-style:solid;
+	border-width:2px;
+	line-height: 20px;
+	word-wrap: break-word;
+}
+#resourceTable .datetime {
+	width: 10%;
+}
+</style>
+<input type="hidden" id="forMode" value="yuding"/>
+<input type="hidden" id="forbidName" value="开学前"/>
+<input type="hidden" id="forbidReason" value="晨练场请到现场缴费"/>
+<p id="forbidReasonShow"></p>
+<table id="resourceTable" style="font-size:10px">
+</table>
+<script>
+function Map() {
+    this.elements = new Array();
+
+    //获取MAP元素个数
+    this.size = function() {
+        return this.elements.length;
+    };
+
+    //判断MAP是否为空
+    this.isEmpty = function() {
+        return (this.elements.length < 1);
+    };
+
+    //删除MAP所有元素
+    this.clear = function() {
+        this.elements = new Array();
+    };
+
+    //向MAP中增加元素（key, value)
+    this.put = function(_key, _value) {
+   		if(this.containsKey(_key)) {
+    		this.remove(_key);
+    	}
+        this.elements.push( {
+            key : _key,
+            value : _value
+        });
+    };
+
+    //删除指定KEY的元素，成功返回True，失败返回False
+    this.remove = function(_key) {
+        var bln = false;
+        try {
+            for (i = 0; i < this.elements.length; i++) {
+                if (this.elements[i].key == _key) {
+                    this.elements.splice(i, 1);
+                    return true;
+                }
+            }
+        } catch (e) {
+            bln = false;
+        }
+        return bln;
+    };
+
+    //获取指定KEY的元素值VALUE，失败返回NULL
+    this.get = function(_key) {
+        try {
+            for (i = 0; i < this.elements.length; i++) {
+                if (this.elements[i].key == _key) {
+                    return this.elements[i].value;
+                }
+            }
+        } catch (e) {
+            return null;
+        }
+    };
+
+    //获取指定索引的元素（使用element.key，element.value获取KEY和VALUE），失败返回NULL
+    this.element = function(_index) {
+        if (_index < 0 || _index >= this.elements.length) {
+            return null;
+        }
+        return this.elements[_index];
+    };
+
+    //判断MAP中是否含有指定KEY的元素
+    this.containsKey = function(_key) {
+        var bln = false;
+        try {
+            for (i = 0; i < this.elements.length; i++) {
+                if (this.elements[i].key == _key) {
+                    bln = true;
+                }
+            }
+        } catch (e) {
+            bln = false;
+        }
+        return bln;
+    };
+
+    //判断MAP中是否含有指定VALUE的元素
+    this.containsValue = function(_value) {
+        var bln = false;
+        try {
+            for (i = 0; i < this.elements.length; i++) {
+                if (this.elements[i].value == _value) {
+                    bln = true;
+                }
+            }
+        } catch (e) {
+            bln = false;
+        }
+        return bln;
+    };
+
+    //获取MAP中所有VALUE的数组（ARRAY）
+    this.values = function() {
+        var arr = new Array();
+        for (i = 0; i < this.elements.length; i++) {
+            arr.push(this.elements[i].value);
+        }
+        return arr;
+    };
+
+    //获取MAP中所有KEY的数组（ARRAY）
+    this.keys = function() {
+        var arr = new Array();
+        for (i = 0; i < this.elements.length; i++) {
+            arr.push(this.elements[i].key);
+        }
+        return arr;
+    };
+}
+
+
+function myserialize(objs){
+	var parmString = $(objs).serialize();
+	var parmArray = parmString.split("&");
+	var parmStringNew="";
+	$.each(parmArray,function(index,data){
+	var li_pos = data.indexOf("=");
+	if(li_pos >0){
+		var name = data.substring(0,li_pos);
+		var value = escape(decodeURIComponent(data.substr(li_pos+1)));
+		var parm = name+"="+value;
+		parmStringNew = parmStringNew=="" ? parm : parmStringNew + '&' + parm;
+	}
+	});
+	return parmStringNew;
+}
+
+
+function ajaxSubmit(formId,callback,nowait) {
+	var params = myserialize($("#"+formId));
+	if(!nowait) {
+		$("#myWait").show();
+	}
+	$.ajax({
+	type:'POST',
+	url:$("#"+formId).attr("action"),
+	data:params,
+	success: function(dataMsg){
+		if(callback){
+			callback(dataMsg);
+		}
+		if(!nowait) {
+			$("#myWait").hide();
+		}
+	}
+  });
+}
+
+function isEmpty(value){
+    return /^\s*$/.test(value);
+}
+
+
+function isDateIn(dateStr,limitCount){
+	var now = new Date();    //结束时间
+	dateStr = dateStr.replace(/-/g,"/");
+	var date = new Date(dateStr);
+	var timeDiffer = date.getTime() - now.getTime();  //时间差的毫秒数
+	//计算出相差天数
+	var dayDiffer=parseInt(timeDiffer / (1000 * 60 * 60 * 24));
+	if(dayDiffer < 0) {
+		return false;
+	}
+	return dayDiffer < limitCount;
+}
+
+Date.prototype.format = function(format) {
+    var o =
+    {
+        "M+" : this.getMonth()+1, //month
+        "d+" : this.getDate(),    //day
+        "h+" : this.getHours(),   //hour
+        "m+" : this.getMinutes(), //minute
+        "s+" : this.getSeconds(), //second
+        "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+        "S" : this.getMilliseconds() //millisecond
+    }
+    if(/(y+)/.test(format))
+    format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    for(var k in o)
+    if(new RegExp("("+ k +")").test(format))
+    format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    return format;
+}
+</script>
+<script>
+	//点击表格头部关联点击整列
+	var forUsual = false;
+	function clickth(thobj) {
+		forUsual = false;
+		 var thisIndex = $(thobj).index();
+		var tds = $(thobj).parent().parent().find("td");
+		var forModeVal = $("#forMode").val();
+		if(forModeVal=="xuanze") {
+			tds.each(function(){
+				if($(this).index()==thisIndex) {
+					$(this).trigger('click');
+				}
+			});
+		}else {
+			tds.each(function(){
+				if(!forUsual) {
+					if($(this).index()==thisIndex && typeof($(this).attr("bookId"))=="undefined") {
+						$(this).trigger('click');
+					}
+				}
+			});
+		}
+	}
+	//点击表格行首关联整行
+	function clicktr(thobj) {
+		forUsual = false;
+		var tds = $(thobj).parent().find("td");
+		var forModeVal = $("#forMode").val();
+		if(forModeVal=="xuanze") {
+			tds.each(function(){
+					$(this).trigger('click');
+			});
+		}else {
+			tds.each(function(){
+				if(!forUsual) {
+					if(typeof($(this).attr("bookId"))=="undefined") {
+						$(this).trigger('click');
+					}
+				}
+			});
+		}
+	}
+	//点击表格行首关联全部
+	function clickAll(thobj) {
+		forUsual = false;
+		var tds = $(thobj).parent().parent().find("td");
+		var forModeVal = $("#forMode").val();
+		if(forModeVal=="xuanze") {
+			tds.each(function(){
+					$(this).trigger('click');
+			});
+		}else {
+			tds.each(function(){
+				if(!forUsual) {
+					if(typeof($(this).attr("bookId"))=="undefined") {
+						$(this).trigger('click');
+					}
+				}
+			});
+		}
+		$(thobj).attr("style","cursor:pointer;background-color:#00FFFF");
+	}
+	var item_name = '';
+	function renderTable(){
+		var resourceArray = new Array();
+
+		resourceArray.push({id:'5500347',time_session:'6:30-8:00',field_name:'羽01',overlaySize:'3'});
+
+		resourceArray.push({id:'5500269',time_session:'6:30-8:00',field_name:'羽02',overlaySize:'3'});
+
+		resourceArray.push({id:'5500407',time_session:'6:30-8:00',field_name:'羽03',overlaySize:'3'});
+
+		resourceArray.push({id:'5500036',time_session:'6:30-8:00',field_name:'羽04',overlaySize:'3'});
+
+		resourceArray.push({id:'5500190',time_session:'6:30-8:00',field_name:'羽05',overlaySize:'3'});
+
+		resourceArray.push({id:'5499958',time_session:'6:30-8:00',field_name:'羽06',overlaySize:'3'});
+
+		resourceArray.push({id:'5499686',time_session:'6:30-8:00',field_name:'羽07',overlaySize:'3'});
+
+		resourceArray.push({id:'5499706',time_session:'6:30-8:00',field_name:'羽08',overlaySize:'3'});
+
+		resourceArray.push({id:'5500056',time_session:'6:30-8:00',field_name:'羽09',overlaySize:'3'});
+
+		resourceArray.push({id:'5499978',time_session:'6:30-8:00',field_name:'羽10',overlaySize:'3'});
+
+		resourceArray.push({id:'5499785',time_session:'6:30-8:00',field_name:'羽11',overlaySize:'3'});
+
+		resourceArray.push({id:'5500367',time_session:'6:30-8:00',field_name:'羽12',overlaySize:'3'});
+
+		resourceArray.push({id:'4045694',time_session:'8:00-9:00',field_name:'羽01',overlaySize:'2'});
+
+		resourceArray.push({id:'4045722',time_session:'8:00-9:00',field_name:'羽02',overlaySize:'2'});
+
+		resourceArray.push({id:'4045750',time_session:'8:00-9:00',field_name:'羽03',overlaySize:'2'});
+
+		resourceArray.push({id:'4045778',time_session:'8:00-9:00',field_name:'羽04',overlaySize:'2'});
+
+		resourceArray.push({id:'4045806',time_session:'8:00-9:00',field_name:'羽05',overlaySize:'2'});
+
+		resourceArray.push({id:'4045834',time_session:'8:00-9:00',field_name:'羽06',overlaySize:'2'});
+
+		resourceArray.push({id:'4045862',time_session:'8:00-9:00',field_name:'羽07',overlaySize:'2'});
+
+		resourceArray.push({id:'4045890',time_session:'8:00-9:00',field_name:'羽08',overlaySize:'2'});
+
+		resourceArray.push({id:'4045918',time_session:'8:00-9:00',field_name:'羽09',overlaySize:'2'});
+
+		resourceArray.push({id:'4045946',time_session:'8:00-9:00',field_name:'羽10',overlaySize:'2'});
+
+		resourceArray.push({id:'4045974',time_session:'8:00-9:00',field_name:'羽11',overlaySize:'2'});
+
+		resourceArray.push({id:'4046002',time_session:'8:00-9:00',field_name:'羽12',overlaySize:'2'});
+
+		resourceArray.push({id:'4045696',time_session:'9:00-10:00',field_name:'羽01',overlaySize:'2'});
+
+		resourceArray.push({id:'4045724',time_session:'9:00-10:00',field_name:'羽02',overlaySize:'2'});
+
+		resourceArray.push({id:'4045752',time_session:'9:00-10:00',field_name:'羽03',overlaySize:'2'});
+
+		resourceArray.push({id:'4045780',time_session:'9:00-10:00',field_name:'羽04',overlaySize:'2'});
+
+		resourceArray.push({id:'4045808',time_session:'9:00-10:00',field_name:'羽05',overlaySize:'2'});
+
+		resourceArray.push({id:'4045836',time_session:'9:00-10:00',field_name:'羽06',overlaySize:'2'});
+
+		resourceArray.push({id:'4045864',time_session:'9:00-10:00',field_name:'羽07',overlaySize:'2'});
+
+		resourceArray.push({id:'4045892',time_session:'9:00-10:00',field_name:'羽08',overlaySize:'2'});
+
+		resourceArray.push({id:'4045920',time_session:'9:00-10:00',field_name:'羽09',overlaySize:'2'});
+
+		resourceArray.push({id:'4045948',time_session:'9:00-10:00',field_name:'羽10',overlaySize:'2'});
+
+		resourceArray.push({id:'4045976',time_session:'9:00-10:00',field_name:'羽11',overlaySize:'2'});
+
+		resourceArray.push({id:'4046004',time_session:'9:00-10:00',field_name:'羽12',overlaySize:'2'});
+
+		resourceArray.push({id:'4045698',time_session:'10:00-11:00',field_name:'羽01',overlaySize:'2'});
+
+		resourceArray.push({id:'4045726',time_session:'10:00-11:00',field_name:'羽02',overlaySize:'2'});
+
+		resourceArray.push({id:'4045754',time_session:'10:00-11:00',field_name:'羽03',overlaySize:'2'});
+
+		resourceArray.push({id:'4045782',time_session:'10:00-11:00',field_name:'羽04',overlaySize:'2'});
+
+		resourceArray.push({id:'4045810',time_session:'10:00-11:00',field_name:'羽05',overlaySize:'2'});
+
+		resourceArray.push({id:'4045838',time_session:'10:00-11:00',field_name:'羽06',overlaySize:'2'});
+
+		resourceArray.push({id:'4045866',time_session:'10:00-11:00',field_name:'羽07',overlaySize:'2'});
+
+		resourceArray.push({id:'4045894',time_session:'10:00-11:00',field_name:'羽08',overlaySize:'2'});
+
+		resourceArray.push({id:'4045922',time_session:'10:00-11:00',field_name:'羽09',overlaySize:'2'});
+
+		resourceArray.push({id:'4045950',time_session:'10:00-11:00',field_name:'羽10',overlaySize:'2'});
+
+		resourceArray.push({id:'4045978',time_session:'10:00-11:00',field_name:'羽11',overlaySize:'2'});
+
+		resourceArray.push({id:'4046006',time_session:'10:00-11:00',field_name:'羽12',overlaySize:'2'});
+
+		resourceArray.push({id:'4045700',time_session:'11:00-11:30',field_name:'羽01',overlaySize:'1'});
+
+		resourceArray.push({id:'4045728',time_session:'11:00-11:30',field_name:'羽02',overlaySize:'1'});
+
+		resourceArray.push({id:'4045756',time_session:'11:00-11:30',field_name:'羽03',overlaySize:'1'});
+
+		resourceArray.push({id:'4045784',time_session:'11:00-11:30',field_name:'羽04',overlaySize:'1'});
+
+		resourceArray.push({id:'4045812',time_session:'11:00-11:30',field_name:'羽05',overlaySize:'1'});
+
+		resourceArray.push({id:'4045840',time_session:'11:00-11:30',field_name:'羽06',overlaySize:'1'});
+
+		resourceArray.push({id:'4045868',time_session:'11:00-11:30',field_name:'羽07',overlaySize:'1'});
+
+		resourceArray.push({id:'4045896',time_session:'11:00-11:30',field_name:'羽08',overlaySize:'1'});
+
+		resourceArray.push({id:'4045924',time_session:'11:00-11:30',field_name:'羽09',overlaySize:'1'});
+
+		resourceArray.push({id:'4045952',time_session:'11:00-11:30',field_name:'羽10',overlaySize:'1'});
+
+		resourceArray.push({id:'4045980',time_session:'11:00-11:30',field_name:'羽11',overlaySize:'1'});
+
+		resourceArray.push({id:'4046008',time_session:'11:00-11:30',field_name:'羽12',overlaySize:'1'});
+
+		resourceArray.push({id:'4045701',time_session:'11:30-12:00',field_name:'羽01',overlaySize:'1'});
+
+		resourceArray.push({id:'4045729',time_session:'11:30-12:00',field_name:'羽02',overlaySize:'1'});
+
+		resourceArray.push({id:'4045757',time_session:'11:30-12:00',field_name:'羽03',overlaySize:'1'});
+
+		resourceArray.push({id:'4045785',time_session:'11:30-12:00',field_name:'羽04',overlaySize:'1'});
+
+		resourceArray.push({id:'4045813',time_session:'11:30-12:00',field_name:'羽05',overlaySize:'1'});
+
+		resourceArray.push({id:'4045841',time_session:'11:30-12:00',field_name:'羽06',overlaySize:'1'});
+
+		resourceArray.push({id:'4045869',time_session:'11:30-12:00',field_name:'羽07',overlaySize:'1'});
+
+		resourceArray.push({id:'4045897',time_session:'11:30-12:00',field_name:'羽08',overlaySize:'1'});
+
+		resourceArray.push({id:'4045925',time_session:'11:30-12:00',field_name:'羽09',overlaySize:'1'});
+
+		resourceArray.push({id:'4045953',time_session:'11:30-12:00',field_name:'羽10',overlaySize:'1'});
+
+		resourceArray.push({id:'4045981',time_session:'11:30-12:00',field_name:'羽11',overlaySize:'1'});
+
+		resourceArray.push({id:'4046009',time_session:'11:30-12:00',field_name:'羽12',overlaySize:'1'});
+
+		resourceArray.push({id:'4045702',time_session:'12:00-13:00',field_name:'羽01',overlaySize:'2'});
+
+		resourceArray.push({id:'4045730',time_session:'12:00-13:00',field_name:'羽02',overlaySize:'2'});
+
+		resourceArray.push({id:'4045758',time_session:'12:00-13:00',field_name:'羽03',overlaySize:'2'});
+
+		resourceArray.push({id:'4045786',time_session:'12:00-13:00',field_name:'羽04',overlaySize:'2'});
+
+		resourceArray.push({id:'4045814',time_session:'12:00-13:00',field_name:'羽05',overlaySize:'2'});
+
+		resourceArray.push({id:'4045842',time_session:'12:00-13:00',field_name:'羽06',overlaySize:'2'});
+
+		resourceArray.push({id:'4045870',time_session:'12:00-13:00',field_name:'羽07',overlaySize:'2'});
+
+		resourceArray.push({id:'4045898',time_session:'12:00-13:00',field_name:'羽08',overlaySize:'2'});
+
+		resourceArray.push({id:'4045926',time_session:'12:00-13:00',field_name:'羽09',overlaySize:'2'});
+
+		resourceArray.push({id:'4045954',time_session:'12:00-13:00',field_name:'羽10',overlaySize:'2'});
+
+		resourceArray.push({id:'4045982',time_session:'12:00-13:00',field_name:'羽11',overlaySize:'2'});
+
+		resourceArray.push({id:'4046010',time_session:'12:00-13:00',field_name:'羽12',overlaySize:'2'});
+
+		resourceArray.push({id:'4045704',time_session:'13:00-14:00',field_name:'羽01',overlaySize:'2'});
+
+		resourceArray.push({id:'4045732',time_session:'13:00-14:00',field_name:'羽02',overlaySize:'2'});
+
+		resourceArray.push({id:'4045760',time_session:'13:00-14:00',field_name:'羽03',overlaySize:'2'});
+
+		resourceArray.push({id:'4045788',time_session:'13:00-14:00',field_name:'羽04',overlaySize:'2'});
+
+		resourceArray.push({id:'4045816',time_session:'13:00-14:00',field_name:'羽05',overlaySize:'2'});
+
+		resourceArray.push({id:'4045844',time_session:'13:00-14:00',field_name:'羽06',overlaySize:'2'});
+
+		resourceArray.push({id:'4045872',time_session:'13:00-14:00',field_name:'羽07',overlaySize:'2'});
+
+		resourceArray.push({id:'4045900',time_session:'13:00-14:00',field_name:'羽08',overlaySize:'2'});
+
+		resourceArray.push({id:'4045928',time_session:'13:00-14:00',field_name:'羽09',overlaySize:'2'});
+
+		resourceArray.push({id:'4045956',time_session:'13:00-14:00',field_name:'羽10',overlaySize:'2'});
+
+		resourceArray.push({id:'4045984',time_session:'13:00-14:00',field_name:'羽11',overlaySize:'2'});
+
+		resourceArray.push({id:'4046012',time_session:'13:00-14:00',field_name:'羽12',overlaySize:'2'});
+
+		resourceArray.push({id:'4045706',time_session:'14:00-15:00',field_name:'羽01',overlaySize:'2'});
+
+		resourceArray.push({id:'4045734',time_session:'14:00-15:00',field_name:'羽02',overlaySize:'2'});
+
+		resourceArray.push({id:'4045762',time_session:'14:00-15:00',field_name:'羽03',overlaySize:'2'});
+
+		resourceArray.push({id:'4045790',time_session:'14:00-15:00',field_name:'羽04',overlaySize:'2'});
+
+		resourceArray.push({id:'4045818',time_session:'14:00-15:00',field_name:'羽05',overlaySize:'2'});
+
+		resourceArray.push({id:'4045846',time_session:'14:00-15:00',field_name:'羽06',overlaySize:'2'});
+
+		resourceArray.push({id:'4045874',time_session:'14:00-15:00',field_name:'羽07',overlaySize:'2'});
+
+		resourceArray.push({id:'4045902',time_session:'14:00-15:00',field_name:'羽08',overlaySize:'2'});
+
+		resourceArray.push({id:'4045930',time_session:'14:00-15:00',field_name:'羽09',overlaySize:'2'});
+
+		resourceArray.push({id:'4045958',time_session:'14:00-15:00',field_name:'羽10',overlaySize:'2'});
+
+		resourceArray.push({id:'4045986',time_session:'14:00-15:00',field_name:'羽11',overlaySize:'2'});
+
+		resourceArray.push({id:'4046014',time_session:'14:00-15:00',field_name:'羽12',overlaySize:'2'});
+
+		resourceArray.push({id:'4045708',time_session:'15:00-16:00',field_name:'羽01',overlaySize:'2'});
+
+		resourceArray.push({id:'4045736',time_session:'15:00-16:00',field_name:'羽02',overlaySize:'2'});
+
+		resourceArray.push({id:'4045764',time_session:'15:00-16:00',field_name:'羽03',overlaySize:'2'});
+
+		resourceArray.push({id:'4045792',time_session:'15:00-16:00',field_name:'羽04',overlaySize:'2'});
+
+		resourceArray.push({id:'4045820',time_session:'15:00-16:00',field_name:'羽05',overlaySize:'2'});
+
+		resourceArray.push({id:'4045848',time_session:'15:00-16:00',field_name:'羽06',overlaySize:'2'});
+
+		resourceArray.push({id:'4045876',time_session:'15:00-16:00',field_name:'羽07',overlaySize:'2'});
+
+		resourceArray.push({id:'4045904',time_session:'15:00-16:00',field_name:'羽08',overlaySize:'2'});
+
+		resourceArray.push({id:'4045932',time_session:'15:00-16:00',field_name:'羽09',overlaySize:'2'});
+
+		resourceArray.push({id:'4045960',time_session:'15:00-16:00',field_name:'羽10',overlaySize:'2'});
+
+		resourceArray.push({id:'4045988',time_session:'15:00-16:00',field_name:'羽11',overlaySize:'2'});
+
+		resourceArray.push({id:'4046016',time_session:'15:00-16:00',field_name:'羽12',overlaySize:'2'});
+
+		resourceArray.push({id:'4045710',time_session:'16:00-17:00',field_name:'羽01',overlaySize:'2'});
+
+		resourceArray.push({id:'4045738',time_session:'16:00-17:00',field_name:'羽02',overlaySize:'2'});
+
+		resourceArray.push({id:'4045766',time_session:'16:00-17:00',field_name:'羽03',overlaySize:'2'});
+
+		resourceArray.push({id:'4045794',time_session:'16:00-17:00',field_name:'羽04',overlaySize:'2'});
+
+		resourceArray.push({id:'4045822',time_session:'16:00-17:00',field_name:'羽05',overlaySize:'2'});
+
+		resourceArray.push({id:'4045850',time_session:'16:00-17:00',field_name:'羽06',overlaySize:'2'});
+
+		resourceArray.push({id:'4045878',time_session:'16:00-17:00',field_name:'羽07',overlaySize:'2'});
+
+		resourceArray.push({id:'4045906',time_session:'16:00-17:00',field_name:'羽08',overlaySize:'2'});
+
+		resourceArray.push({id:'4045934',time_session:'16:00-17:00',field_name:'羽09',overlaySize:'2'});
+
+		resourceArray.push({id:'4045962',time_session:'16:00-17:00',field_name:'羽10',overlaySize:'2'});
+
+		resourceArray.push({id:'4045990',time_session:'16:00-17:00',field_name:'羽11',overlaySize:'2'});
+
+		resourceArray.push({id:'4046018',time_session:'16:00-17:00',field_name:'羽12',overlaySize:'2'});
+
+		resourceArray.push({id:'4045712',time_session:'17:00-18:00',field_name:'羽01',overlaySize:'2'});
+
+		resourceArray.push({id:'4045740',time_session:'17:00-18:00',field_name:'羽02',overlaySize:'2'});
+
+		resourceArray.push({id:'4045768',time_session:'17:00-18:00',field_name:'羽03',overlaySize:'2'});
+
+		resourceArray.push({id:'4045796',time_session:'17:00-18:00',field_name:'羽04',overlaySize:'2'});
+
+		resourceArray.push({id:'4045824',time_session:'17:00-18:00',field_name:'羽05',overlaySize:'2'});
+
+		resourceArray.push({id:'4045852',time_session:'17:00-18:00',field_name:'羽06',overlaySize:'2'});
+
+		resourceArray.push({id:'4045880',time_session:'17:00-18:00',field_name:'羽07',overlaySize:'2'});
+
+		resourceArray.push({id:'4045908',time_session:'17:00-18:00',field_name:'羽08',overlaySize:'2'});
+
+		resourceArray.push({id:'4045936',time_session:'17:00-18:00',field_name:'羽09',overlaySize:'2'});
+
+		resourceArray.push({id:'4045964',time_session:'17:00-18:00',field_name:'羽10',overlaySize:'2'});
+
+		resourceArray.push({id:'4045992',time_session:'17:00-18:00',field_name:'羽11',overlaySize:'2'});
+
+		resourceArray.push({id:'4046020',time_session:'17:00-18:00',field_name:'羽12',overlaySize:'2'});
+
+		resourceArray.push({id:'4045714',time_session:'18:00-19:00',field_name:'羽01',overlaySize:'2'});
+
+		resourceArray.push({id:'4045742',time_session:'18:00-19:00',field_name:'羽02',overlaySize:'2'});
+
+		resourceArray.push({id:'4045770',time_session:'18:00-19:00',field_name:'羽03',overlaySize:'2'});
+
+		resourceArray.push({id:'4045798',time_session:'18:00-19:00',field_name:'羽04',overlaySize:'2'});
+
+		resourceArray.push({id:'4045826',time_session:'18:00-19:00',field_name:'羽05',overlaySize:'2'});
+
+		resourceArray.push({id:'4045854',time_session:'18:00-19:00',field_name:'羽06',overlaySize:'2'});
+
+		resourceArray.push({id:'4045882',time_session:'18:00-19:00',field_name:'羽07',overlaySize:'2'});
+
+		resourceArray.push({id:'4045910',time_session:'18:00-19:00',field_name:'羽08',overlaySize:'2'});
+
+		resourceArray.push({id:'4045938',time_session:'18:00-19:00',field_name:'羽09',overlaySize:'2'});
+
+		resourceArray.push({id:'4045966',time_session:'18:00-19:00',field_name:'羽10',overlaySize:'2'});
+
+		resourceArray.push({id:'4045994',time_session:'18:00-19:00',field_name:'羽11',overlaySize:'2'});
+
+		resourceArray.push({id:'4046022',time_session:'18:00-19:00',field_name:'羽12',overlaySize:'2'});
+
+		resourceArray.push({id:'4045716',time_session:'19:00-20:00',field_name:'羽01',overlaySize:'2'});
+
+		resourceArray.push({id:'4045744',time_session:'19:00-20:00',field_name:'羽02',overlaySize:'2'});
+
+		resourceArray.push({id:'4045772',time_session:'19:00-20:00',field_name:'羽03',overlaySize:'2'});
+
+		resourceArray.push({id:'4045800',time_session:'19:00-20:00',field_name:'羽04',overlaySize:'2'});
+
+		resourceArray.push({id:'4045828',time_session:'19:00-20:00',field_name:'羽05',overlaySize:'2'});
+
+		resourceArray.push({id:'4045856',time_session:'19:00-20:00',field_name:'羽06',overlaySize:'2'});
+
+		resourceArray.push({id:'4045884',time_session:'19:00-20:00',field_name:'羽07',overlaySize:'2'});
+
+		resourceArray.push({id:'4045912',time_session:'19:00-20:00',field_name:'羽08',overlaySize:'2'});
+
+		resourceArray.push({id:'4045940',time_session:'19:00-20:00',field_name:'羽09',overlaySize:'2'});
+
+		resourceArray.push({id:'4045968',time_session:'19:00-20:00',field_name:'羽10',overlaySize:'2'});
+
+		resourceArray.push({id:'4045996',time_session:'19:00-20:00',field_name:'羽11',overlaySize:'2'});
+
+		resourceArray.push({id:'4046024',time_session:'19:00-20:00',field_name:'羽12',overlaySize:'2'});
+
+		resourceArray.push({id:'4045718',time_session:'20:00-21:00',field_name:'羽01',overlaySize:'2'});
+
+		resourceArray.push({id:'4045746',time_session:'20:00-21:00',field_name:'羽02',overlaySize:'2'});
+
+		resourceArray.push({id:'4045774',time_session:'20:00-21:00',field_name:'羽03',overlaySize:'2'});
+
+		resourceArray.push({id:'4045802',time_session:'20:00-21:00',field_name:'羽04',overlaySize:'2'});
+
+		resourceArray.push({id:'4045830',time_session:'20:00-21:00',field_name:'羽05',overlaySize:'2'});
+
+		resourceArray.push({id:'4045858',time_session:'20:00-21:00',field_name:'羽06',overlaySize:'2'});
+
+		resourceArray.push({id:'4045886',time_session:'20:00-21:00',field_name:'羽07',overlaySize:'2'});
+
+		resourceArray.push({id:'4045914',time_session:'20:00-21:00',field_name:'羽08',overlaySize:'2'});
+
+		resourceArray.push({id:'4045942',time_session:'20:00-21:00',field_name:'羽09',overlaySize:'2'});
+
+		resourceArray.push({id:'4045970',time_session:'20:00-21:00',field_name:'羽10',overlaySize:'2'});
+
+		resourceArray.push({id:'4045998',time_session:'20:00-21:00',field_name:'羽11',overlaySize:'2'});
+
+		resourceArray.push({id:'4046026',time_session:'20:00-21:00',field_name:'羽12',overlaySize:'2'});
+
+		resourceArray.push({id:'4045720',time_session:'21:00-22:00',field_name:'羽01',overlaySize:'2'});
+
+		resourceArray.push({id:'4045748',time_session:'21:00-22:00',field_name:'羽02',overlaySize:'2'});
+
+		resourceArray.push({id:'4045776',time_session:'21:00-22:00',field_name:'羽03',overlaySize:'2'});
+
+		resourceArray.push({id:'4045804',time_session:'21:00-22:00',field_name:'羽04',overlaySize:'2'});
+
+		resourceArray.push({id:'4045832',time_session:'21:00-22:00',field_name:'羽05',overlaySize:'2'});
+
+		resourceArray.push({id:'4045860',time_session:'21:00-22:00',field_name:'羽06',overlaySize:'2'});
+
+		resourceArray.push({id:'4045888',time_session:'21:00-22:00',field_name:'羽07',overlaySize:'2'});
+
+		resourceArray.push({id:'4045916',time_session:'21:00-22:00',field_name:'羽08',overlaySize:'2'});
+
+		resourceArray.push({id:'4045944',time_session:'21:00-22:00',field_name:'羽09',overlaySize:'2'});
+
+		resourceArray.push({id:'4045972',time_session:'21:00-22:00',field_name:'羽10',overlaySize:'2'});
+
+		resourceArray.push({id:'4046000',time_session:'21:00-22:00',field_name:'羽11',overlaySize:'2'});
+
+		resourceArray.push({id:'4046028',time_session:'21:00-22:00',field_name:'羽12',overlaySize:'2'});
+
+
+		var head = new Map();
+		var trs = new Map();
+
+		$.each(resourceArray,function(i,o){
+			head.put(o.field_name,o.field_name);
+
+			var trArray = trs.get(o.time_session);
+			if(!trArray) {
+				trArray = new Array();
+				trs.put(o.time_session,trArray);
+			}
+			trArray.push(o);
+		});
+
+		//make Th
+		if(trs.size()==0) {
+			$("#resourceTable").append("<h4>该场地在此时段不开放网上预约</h4>");
+		}else {
+			var thHtml = "<tr><th onclick='clickAll(this)' onmouseover=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseout=\"this.style.cssText='cursor:pointer'\" onmousedown=\"this.style.cssText='cursor:progress;background-color:blue'\">"+item_name+"</th>";
+			$.each(head.keys(),function(i,o){
+				thHtml += "<th onclick='clickth(this)' onmouseup=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseover=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseout=\"this.style.cssText='cursor:pointer'\" onmousedown=\"this.style.cssText='cursor:pointer;background-color:blue'\">"+o+"</th>";
+			});
+			thHtml += "</tr>";
+			$("#resourceTable").append(thHtml);
+			$.each(trs.keys(),function(i,trName){
+				var trHtml = "<tr class='resourceTr' ><th class='datetime' onclick='clicktr(this)' onmouseup=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseover=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseout=\"this.style.cssText='cursor:pointer'\" onmousedown=\"this.style.cssText='cursor:pointer;background-color:blue'\">"+trName+"</th>";
+				$.each(trs.get(trName),function(i2,resObj){
+					trHtml += "<td class='resourceTd' id='resourceTd_"+resObj.id+"' fieldName=\""+resObj.field_name+"\" time_session=\""+resObj.time_session+"\" overlaySize=\""+resObj.overlaySize+"\"  resource_id = \""+resObj.id+"\" >&nbsp;<div id='res_div_"+resObj.id+"' class='simpleDiv'></div></td>";
+				});
+				trHtml += "</tr>";
+				$("#resourceTable").append(trHtml);
+			});
+		}
+	}
+
+	renderTable();
+</script>
+
+<script>
+
+	//add 状态
+	function markResStatus(bookId,resId,status) {
+		$("#resourceTd_"+resId).attr("bookId",bookId);
+		if(status == '1'){
+			$("#resourceTd_"+resId).attr("lock","true");
+			$("#resourceTd_"+resId).css("background","yellow");
+		}
+	}
+	//updateInTime
+
+		markResStatus('7404357','4045704','1');
+
+		markResStatus('7404379','4045706','1');
+
+		markResStatus('7404401','4045708','1');
+
+		markResStatus('7404423','4045710','1');
+
+		markResStatus('7493489','4045712','1');
+
+		markResStatus('7502836','4045714','1');
+
+		markResStatus('7476900','4045716','1');
+
+		markResStatus('7476902','4045718','1');
+
+		markResStatus('7543043','4045720','1');
+
+		markResStatus('7543156','4045726','1');
+
+		markResStatus('7543158','4045728','1');
+
+		markResStatus('7404359','4045732','1');
+
+		markResStatus('7404381','4045734','1');
+
+		markResStatus('7404403','4045736','1');
+
+		markResStatus('7404425','4045738','1');
+
+		markResStatus('7493491','4045740','1');
+
+		markResStatus('7511872','4045742','1');
+
+		markResStatus('7233258','4045744','1');
+
+		markResStatus('7233260','4045746','1');
+
+		markResStatus('7503102','4045748','1');
+
+		markResStatus('7543362','4045752','1');
+
+		markResStatus('7543364','4045754','1');
+
+		markResStatus('7404361','4045760','1');
+
+		markResStatus('7404383','4045762','1');
+
+		markResStatus('7404405','4045764','1');
+
+		markResStatus('7404427','4045766','1');
+
+		markResStatus('7502288','4045768','1');
+
+		markResStatus('7502290','4045770','1');
+
+		markResStatus('7233262','4045772','1');
+
+		markResStatus('7233264','4045774','1');
+
+		markResStatus('7503104','4045776','1');
+
+		markResStatus('7404363','4045788','1');
+
+		markResStatus('7404385','4045790','1');
+
+		markResStatus('7404407','4045792','1');
+
+		markResStatus('7404429','4045794','1');
+
+		markResStatus('7502684','4045796','1');
+
+		markResStatus('7495510','4045798','1');
+
+		markResStatus('7495512','4045800','1');
+
+		markResStatus('7492125','4045802','1');
+
+		markResStatus('7492127','4045804','1');
+
+		markResStatus('7404365','4045816','1');
+
+		markResStatus('7404387','4045818','1');
+
+		markResStatus('7404409','4045820','1');
+
+		markResStatus('7404431','4045822','1');
+
+		markResStatus('7502686','4045824','1');
+
+		markResStatus('7413898','4045826','1');
+
+		markResStatus('7413900','4045828','1');
+
+		markResStatus('7456796','4045830','1');
+
+		markResStatus('7456798','4045832','1');
+
+		markResStatus('7536235','4045834','1');
+
+		markResStatus('7404367','4045844','1');
+
+		markResStatus('7404389','4045846','1');
+
+		markResStatus('7404411','4045848','1');
+
+		markResStatus('7404433','4045850','1');
+
+		markResStatus('7502688','4045852','1');
+
+		markResStatus('7413902','4045854','1');
+
+		markResStatus('7413904','4045856','1');
+
+		markResStatus('7456800','4045858','1');
+
+		markResStatus('7456802','4045860','1');
+
+		markResStatus('7503811','4045866','1');
+
+		markResStatus('7503813','4045868','1');
+
+		markResStatus('7503814','4045869','1');
+
+		markResStatus('7404369','4045872','1');
+
+		markResStatus('7404391','4045874','1');
+
+		markResStatus('7404413','4045876','1');
+
+		markResStatus('7404435','4045878','1');
+
+		markResStatus('7502690','4045880','1');
+
+		markResStatus('7426021','4045882','1');
+
+		markResStatus('7426023','4045884','1');
+
+		markResStatus('7480737','4045886','1');
+
+		markResStatus('7480739','4045888','1');
+
+		markResStatus('7503815','4045894','1');
+
+		markResStatus('7503817','4045896','1');
+
+		markResStatus('7503818','4045897','1');
+
+		markResStatus('7404371','4045900','1');
+
+		markResStatus('7404393','4045902','1');
+
+		markResStatus('7404415','4045904','1');
+
+		markResStatus('7404437','4045906','1');
+
+		markResStatus('7482547','4045908','1');
+
+		markResStatus('7482549','4045910','1');
+
+		markResStatus('7494499','4045912','1');
+
+		markResStatus('7480741','4045914','1');
+
+		markResStatus('7480743','4045916','1');
+
+		markResStatus('7543147','5499706','1');
+
+		markResStatus('7404448','4045918','1');
+
+		markResStatus('7404450','4045920','1');
+
+		markResStatus('7404452','4045922','1');
+
+		markResStatus('7404454','4045924','1');
+
+		markResStatus('7404455','4045925','1');
+
+		markResStatus('7404456','4045926','1');
+
+		markResStatus('7404373','4045928','1');
+
+		markResStatus('7404395','4045930','1');
+
+		markResStatus('7404417','4045932','1');
+
+		markResStatus('7404439','4045934','1');
+
+		markResStatus('7482551','4045936','1');
+
+		markResStatus('7482553','4045938','1');
+
+		markResStatus('7494501','4045940','1');
+
+		markResStatus('7480745','4045942','1');
+
+		markResStatus('7480747','4045944','1');
+
+		markResStatus('7404445','5500056','1');
+
+		markResStatus('7404461','4045946','1');
+
+		markResStatus('7404463','4045948','1');
+
+		markResStatus('7404465','4045950','1');
+
+		markResStatus('7404467','4045952','1');
+
+		markResStatus('7404468','4045953','1');
+
+		markResStatus('7404469','4045954','1');
+
+		markResStatus('7404375','4045956','1');
+
+		markResStatus('7404397','4045958','1');
+
+		markResStatus('7404419','4045960','1');
+
+		markResStatus('7404441','4045962','1');
+
+		markResStatus('7419504','4045964','1');
+
+		markResStatus('7419510','4045966','1');
+
+		markResStatus('7494503','4045968','1');
+
+		markResStatus('7489355','4045970','1');
+
+		markResStatus('7489357','4045972','1');
+
+		markResStatus('7404458','5499978','1');
+
+		markResStatus('7404482','4045974','1');
+
+		markResStatus('7404484','4045976','1');
+
+		markResStatus('7404486','4045978','1');
+
+		markResStatus('7404488','4045980','1');
+
+		markResStatus('7404489','4045981','1');
+
+		markResStatus('7404490','4045982','1');
+
+		markResStatus('7404471','4045984','1');
+
+		markResStatus('7404473','4045986','1');
+
+		markResStatus('7404475','4045988','1');
+
+		markResStatus('7404477','4045990','1');
+
+		markResStatus('7419506','4045992','1');
+
+		markResStatus('7419508','4045994','1');
+
+		markResStatus('7494505','4045996','1');
+
+		markResStatus('7495137','4045998','1');
+
+		markResStatus('7495139','4046000','1');
+
+		markResStatus('7404479','5499785','1');
+
+		markResStatus('7404500','4046002','1');
+
+		markResStatus('7404498','4046004','1');
+
+		markResStatus('7404496','4046006','1');
+
+		markResStatus('7404495','4046008','1');
+
+		markResStatus('7404494','4046009','1');
+
+		markResStatus('7404492','4046010','1');
+
+		markResStatus('7404377','4046012','1');
+
+		markResStatus('7404399','4046014','1');
+
+		markResStatus('7404421','4046016','1');
+
+		markResStatus('7404443','4046018','1');
+
+		markResStatus('7502834','4046020','1');
+
+		markResStatus('7497790','4046022','1');
+
+		markResStatus('7497792','4046024','1');
+
+		markResStatus('7495141','4046026','1');
+
+		markResStatus('7495143','4046028','1');
+
+		markResStatus('7404502','5500367','1');
+
+	//updateForUnsubscribe
+
+
+	//设置td时间值以及是否过期 (格式 '5:00-6:00') 超过结束时间算过期
+	function isLate(time_date,tSession) {
+		var now = new Date();
+	    var sd=time_date.split("-");
+	    eval("sd[1]=" + sd[1] + "-1");
+	    var dNow = new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+	    var dTarget = new Date(sd[0],sd[1],sd[2]).getTime();
+		if( dNow > dTarget) {
+			return true;
+		}else{
+			if(dNow == dTarget){
+				var endHour = tSession.substr(tSession.indexOf('-') + 1);
+				endHour = endHour.substring(0,endHour.indexOf(':'));
+				eval("endHour="+endHour+";");
+
+				if(now.getHours() >= endHour) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+
+  	var time_date = '2016-09-27';
+	$.each($(".resourceTd"),function(i,o){
+		$(o).attr("time_date",time_date);
+		var tdTime_session = $(o).attr("time_session");
+		if(isLate(time_date,tdTime_session)) {
+			$(o).attr("isLate","true");
+		}
+	});
+
+
+	//添加价格
+	function addCost(resId,cost) {
+		var resTdId="resourceTd_"+resId;
+		$("#"+resTdId).attr("cost",cost);
+	}
+
+
+		addCost('4045694','20.0');
+
+		addCost('4045696','20.0');
+
+		addCost('4045698','20.0');
+
+		addCost('4045700','10.0');
+
+		addCost('4045701','10.0');
+
+		addCost('4045702','20.0');
+
+		addCost('4045704','20.0');
+
+		addCost('4045706','20.0');
+
+		addCost('4045708','20.0');
+
+		addCost('4045710','20.0');
+
+		addCost('4045712','20.0');
+
+		addCost('4045714','20.0');
+
+		addCost('4045716','20.0');
+
+		addCost('4045718','20.0');
+
+		addCost('4045720','20.0');
+
+		addCost('5500347','20.0');
+
+		addCost('4045722','20.0');
+
+		addCost('4045724','20.0');
+
+		addCost('4045726','20.0');
+
+		addCost('4045728','10.0');
+
+		addCost('4045729','10.0');
+
+		addCost('4045730','20.0');
+
+		addCost('4045732','20.0');
+
+		addCost('4045734','20.0');
+
+		addCost('4045736','20.0');
+
+		addCost('4045738','20.0');
+
+		addCost('4045740','20.0');
+
+		addCost('4045742','20.0');
+
+		addCost('4045744','20.0');
+
+		addCost('4045746','20.0');
+
+		addCost('4045748','20.0');
+
+		addCost('5500269','20.0');
+
+		addCost('4045750','20.0');
+
+		addCost('4045752','20.0');
+
+		addCost('4045754','20.0');
+
+		addCost('4045756','10.0');
+
+		addCost('4045757','10.0');
+
+		addCost('4045758','20.0');
+
+		addCost('4045760','20.0');
+
+		addCost('4045762','20.0');
+
+		addCost('4045764','20.0');
+
+		addCost('4045766','20.0');
+
+		addCost('4045768','20.0');
+
+		addCost('4045770','20.0');
+
+		addCost('4045772','20.0');
+
+		addCost('4045774','20.0');
+
+		addCost('4045776','20.0');
+
+		addCost('5500407','20.0');
+
+		addCost('4045778','20.0');
+
+		addCost('4045780','20.0');
+
+		addCost('4045782','20.0');
+
+		addCost('4045784','10.0');
+
+		addCost('4045785','10.0');
+
+		addCost('4045786','20.0');
+
+		addCost('4045788','20.0');
+
+		addCost('4045790','20.0');
+
+		addCost('4045792','20.0');
+
+		addCost('4045794','20.0');
+
+		addCost('4045796','20.0');
+
+		addCost('4045798','20.0');
+
+		addCost('4045800','20.0');
+
+		addCost('4045802','20.0');
+
+		addCost('4045804','20.0');
+
+		addCost('5500036','20.0');
+
+		addCost('4045806','20.0');
+
+		addCost('4045808','20.0');
+
+		addCost('4045810','20.0');
+
+		addCost('4045812','10.0');
+
+		addCost('4045813','10.0');
+
+		addCost('4045814','20.0');
+
+		addCost('4045816','20.0');
+
+		addCost('4045818','20.0');
+
+		addCost('4045820','20.0');
+
+		addCost('4045822','20.0');
+
+		addCost('4045824','20.0');
+
+		addCost('4045826','20.0');
+
+		addCost('4045828','20.0');
+
+		addCost('4045830','20.0');
+
+		addCost('4045832','20.0');
+
+		addCost('5500190','20.0');
+
+		addCost('4045834','20.0');
+
+		addCost('4045836','20.0');
+
+		addCost('4045838','20.0');
+
+		addCost('4045840','10.0');
+
+		addCost('4045841','10.0');
+
+		addCost('4045842','20.0');
+
+		addCost('4045844','20.0');
+
+		addCost('4045846','20.0');
+
+		addCost('4045848','20.0');
+
+		addCost('4045850','20.0');
+
+		addCost('4045852','20.0');
+
+		addCost('4045854','20.0');
+
+		addCost('4045856','20.0');
+
+		addCost('4045858','20.0');
+
+		addCost('4045860','20.0');
+
+		addCost('5499958','20.0');
+
+		addCost('4045862','20.0');
+
+		addCost('4045864','20.0');
+
+		addCost('4045866','20.0');
+
+		addCost('4045868','10.0');
+
+		addCost('4045869','10.0');
+
+		addCost('4045870','20.0');
+
+		addCost('4045872','20.0');
+
+		addCost('4045874','20.0');
+
+		addCost('4045876','20.0');
+
+		addCost('4045878','20.0');
+
+		addCost('4045880','20.0');
+
+		addCost('4045882','20.0');
+
+		addCost('4045884','20.0');
+
+		addCost('4045886','20.0');
+
+		addCost('4045888','20.0');
+
+		addCost('5499686','20.0');
+
+		addCost('4045890','20.0');
+
+		addCost('4045892','20.0');
+
+		addCost('4045894','20.0');
+
+		addCost('4045896','10.0');
+
+		addCost('4045897','10.0');
+
+		addCost('4045898','20.0');
+
+		addCost('4045900','20.0');
+
+		addCost('4045902','20.0');
+
+		addCost('4045904','20.0');
+
+		addCost('4045906','20.0');
+
+		addCost('4045908','20.0');
+
+		addCost('4045910','20.0');
+
+		addCost('4045912','20.0');
+
+		addCost('4045914','20.0');
+
+		addCost('4045916','20.0');
+
+		addCost('5499706','20.0');
+
+		addCost('4045918','20.0');
+
+		addCost('4045920','20.0');
+
+		addCost('4045922','20.0');
+
+		addCost('4045924','10.0');
+
+		addCost('4045925','10.0');
+
+		addCost('4045926','20.0');
+
+		addCost('4045928','20.0');
+
+		addCost('4045930','20.0');
+
+		addCost('4045932','20.0');
+
+		addCost('4045934','20.0');
+
+		addCost('4045936','20.0');
+
+		addCost('4045938','20.0');
+
+		addCost('4045940','20.0');
+
+		addCost('4045942','20.0');
+
+		addCost('4045944','20.0');
+
+		addCost('5500056','20.0');
+
+		addCost('4045946','20.0');
+
+		addCost('4045948','20.0');
+
+		addCost('4045950','20.0');
+
+		addCost('4045952','10.0');
+
+		addCost('4045953','10.0');
+
+		addCost('4045954','20.0');
+
+		addCost('4045956','20.0');
+
+		addCost('4045958','20.0');
+
+		addCost('4045960','20.0');
+
+		addCost('4045962','20.0');
+
+		addCost('4045964','20.0');
+
+		addCost('4045966','20.0');
+
+		addCost('4045968','20.0');
+
+		addCost('4045970','20.0');
+
+		addCost('4045972','20.0');
+
+		addCost('5499978','20.0');
+
+		addCost('4045974','20.0');
+
+		addCost('4045976','20.0');
+
+		addCost('4045978','20.0');
+
+		addCost('4045980','10.0');
+
+		addCost('4045981','10.0');
+
+		addCost('4045982','20.0');
+
+		addCost('4045984','20.0');
+
+		addCost('4045986','20.0');
+
+		addCost('4045988','20.0');
+
+		addCost('4045990','20.0');
+
+		addCost('4045992','20.0');
+
+		addCost('4045994','20.0');
+
+		addCost('4045996','20.0');
+
+		addCost('4045998','20.0');
+
+		addCost('4046000','20.0');
+
+		addCost('5499785','20.0');
+
+		addCost('4046002','20.0');
+
+		addCost('4046004','20.0');
+
+		addCost('4046006','20.0');
+
+		addCost('4046008','10.0');
+
+		addCost('4046009','10.0');
+
+		addCost('4046010','20.0');
+
+		addCost('4046012','20.0');
+
+		addCost('4046014','20.0');
+
+		addCost('4046016','20.0');
+
+		addCost('4046018','20.0');
+
+		addCost('4046020','20.0');
+
+		addCost('4046022','20.0');
+
+		addCost('4046024','20.0');
+
+		addCost('4046026','20.0');
+
+		addCost('4046028','20.0');
+
+		addCost('5500367','20.0');
+
+
+
+	//管理员临时指定禁止网上预定
+
+
+</script>

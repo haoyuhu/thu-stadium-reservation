@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content="体育馆 预定">
+
+<title>清华大学体育场馆管理与预定系统</title>
+<link href="/bootstrap/css/bootstrap.css" rel="stylesheet" id="main-theme-script">
+<link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link rel="stylesheet" href="/mobile/css/jquery.mobile-1.4.2.min.css">
+<style type="text/css">
+.navbar .btn-group {margin-top: -5px;}
+.redfont{color: red !important;}
+.navbar-fixed-top{position: relative;}
+.time_block{text-align: left;margin:5px 0;}
+.time_block a{margin:0 5px;font-size:12px;}
+.container-fluid{padding:0 15px;}
+.tabs {font-family:Verdana,Arial,sans-serif;font-size:12px;line-height:14px;position: relative; padding: 1px; zoom: 1; }
+.tabs ul {background-color: #fff;color:#222222;font-weight:bold;display:block;border-bottom:1px solid #AAAAAA;height:28px; padding:0; margin:0;}
+.tabs ul li {-moz-border-radius-topleft:4px;
+-moz-border-radius-topright:4px;border-bottom:0 none !important;float:left;list-style:none;margin:0 0.2em 1px 0;padding:0;position:relative;top:1px;white-space:nowrap;color:#555555;font-weight:blod;}
+.tabs ul li.tabs_active {margin-bottom:0;padding-bottom:1px;background-color:#fff;  border:1px solid #aaa;color:#333;}
+.tabs ul li.tabs_hover{margin-bottom:0;padding-bottom:1px;background-color:#fff;border:1px solid #999;}
+.tabs ul li a {float:left;padding:0.5em 1em;text-decoration:none;cursor:pointer;color:#777;}
+.tabs ul li.tabs_active a {color:#333;}
+.tabs ul li.tabs_active a {color:#555555;}
+.ui-tabs .ui-tabs-panel {background:none repeat scroll 0 0 transparent;border-width:0;display:block;padding:1em 1.4em;}
+.colorblock{padding:0;border:thin solid #ccc;margin:0 5px;padding:5px; display: inline-block; height: 15px; color:black; text-shadow:none;}
+.yellow-b{background-color: yellow;}
+.grey-b{background-color: grey;}
+.white-b{background-color: white;}
+#right-menu-button{position: absolute;right:25px;}
+.alert{border:none;}
+.alert,.alert-error{background-color: #fff;font-size:12px; color:#b94a48;}
+#bookInfo{width:100%;height:auto;}
+#bookWarning{width:100%;height:auto;line-height: 30px;}
+.well{margin-top:10px;}
+.well a{display:block;margin:5px;}
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper{text-shadow:none;}
+.ui-btn{padding:2px 5px;}
+.pageOverlay { position:fixed; top:0; left:0; z-index:1900; width:100%; height:300%; background:#000; filter:alpha(opacity=70); opacity:0.7; }
+</style>
+<script src="/mobile/js/jquery.js" type="text/javascript"></script>
+<script src="/mobile/js/jquery.mobile-1.4.2.min.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js "></script>
+<script src="/scripts/jquery.cookie/jquery.cookie.js"></script>
+<script src="/gymjs/gymcommon.js"></script>
+<script src="/gymjs/gymbook.js"></script>
+
+<!-- styles end -->
+</head>
+
+<body>    
+    <div data-role="page" class="jqm-demos" data-quicklinks="true">
+	<!--head-->
+	<div class="navbar navbar-fixed-top">
+	  <div class="navbar-inner">
+		<div class="container-fluid"><a class="brand" href="/" style="font-family:宋体;font-size:17px;">清华大学体育场地预约</a>
+		<div class="btn-group" id="right-menu-button">
+		  <a href="#" id="home_menu" class="jqm-search-link ui-btn ui-btn-right">切换场馆</a>
+		  <!--/.nav-collapse -->
+		  </div>
+		</div>
+	  </div>
+	</div>
+      <!-- Table -->
+      <div class="box" id="box-0" >
+     	<input readonly="readonly" type="hidden" name="bookrq" id="bookrq" value="2016-09-25" size="10" />
+        <div class="box-container-toggle">
+          <div class="box-content">
+          	
+          		<div id="bookWarning"></div>
+          		<input id="judgePayOnline" value="1" type="hidden"/>
+	            <div id="bookInfo"></div>
+	            <div id="blackListWarning" style="display: none;"></div>
+	            <div id="tabs" class="tabs"> 
+				     <ul> 
+			     	
+				       	<li class="tabs_active">
+				       		<a href="javascript:chooseItem('3998000','4045681','2016-09-25');">气膜馆羽毛球场</a>
+				       	</li>
+				  	
+				       	<li >
+				       		<a href="javascript:chooseItem('3998000','4037036','2016-09-25');">气膜馆乒乓球场</a>
+				       	</li>
+				  	
+				  			<li id="needShow">
+				       		<a href="javascript:showMyRes();">我的订单</a>
+				       	</li>
+				    </ul> 
+				</div>
+				<div style="clear:both;"></div>
+				<div class="time_block">
+				
+	        	   <a value="2016-09-25" href="javascript:void(0);"  onclick="javascript: changeDateThis('3998000','4045681','','3','2016-09-25');" class="datetime_">
+	        		2016-09-25
+	        	   </a>
+	        	
+	        	   <a value="2016-09-26" href="javascript:void(0);"  onclick="javascript: changeDateThis('3998000','4045681','','3','2016-09-26');" class="datetime_">
+	        		2016-09-26
+	        	   </a>
+	        	
+	        	   <a value="2016-09-27" href="javascript:void(0);"  onclick="javascript: changeDateThis('3998000','4045681','','3','2016-09-27');" class="datetime_">
+	        		2016-09-27
+	        	   </a>
+	        	
+	        	   <a value="2016-09-28" href="javascript:void(0);"  onclick="javascript: changeDateThis('3998000','4045681','','3','2016-09-28');" class="datetime_">
+	        		2016-09-28
+	        	   </a>
+	        	
+				</div>
+          	
+          	
+         	 <!-- 可以预定 -->
+	            
+	            
+	        	 
+		      <span id="needHide">
+		        <strong>说明：</strong>
+				<span class="colorblock yellow-b">已占用</span>
+				<span class="colorblock grey-b">已过期</span>
+				<span class="colorblock white-b">可预约</span>
+				</span>
+	            <div id="bookTableDiv">
+	            </div> 
+	                   
+	           	 <div id="selectPayWay" style="display:none">
+				  <div class="modal-header">
+				    <h3 id="myModalLabel">请选择支付方式</h3>
+				  </div>
+				  <div class="modal-body">
+				   		<input type="radio" name="selectPayWay" id="selectPayWay1" value="1" checked="checked">
+				   		<label for="selectPayWay1" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网上支付</label><br/>
+				   		<input type="radio" name="selectPayWay" id="selectPayWay0" value="0" >
+				   		<label for="selectPayWay0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;现场支付</label>
+				  </div>
+				  <div class="modal-footer">
+				    <button  onclick="changeSelected()" id="payWayConfirm">提交订单</button>
+				    <button id="phone_modal" onclick="cancelChangeSelected()" id="payWayCancel">取消</button>
+				  </div>
+				</div> 	
+					
+	          </div>
+	          <!--/span-->
+	        </div>
+	      </div>
+	      <form id="bookFrm" action="gymbook/gymBookAction.do?ms=saveGymBook" method="post">  
+		      <input type="hidden" id="bookData_totalCost" name="bookData.totalCost" />
+		      <input type="hidden" id="bookData_gzzh" name="bookData.book_person_zjh" />
+		      <input type="hidden" id="bookData_userName" name="bookData.book_person_name" />
+		      <input type="hidden" id="book_person_phone" name="bookData.book_person_phone" />
+		      <input type="hidden" id="bookData_bookmode" name="bookData.book_mode" value="from-phone"/>
+		      <input type="hidden" name="item_idForCache" value="4045681"/>
+		      <input type="hidden" name="time_dateForCache" value="2016-09-25"/>
+		      <input type="hidden" name="userTypeNumForCache" value="1"/>
+		      <input type="hidden" name="putongRes" value="putongRes">
+		      <input type="hidden" name="selectedPayWay" id="selectedPayWay" value="1"/>
+		      <div class="sidebar-nav hide" >
+		        <div class="well" style="padding: 8px 0;">
+		          	 合计金额：<span class="sumCost"></span>
+		            <table class="table table-striped table-bordered table-condensed">
+		             <thead>
+		             	<th>场地</th><th>时间</th><th>价格</th><th>&nbsp;</th>
+		             </thead>
+		              <tbody id="selectedInfo">
+		              </tbody>
+		            </table>
+		        </div>
+		      </div>
+		      <div class="pull-right" id="yyPullRight"> 
+	         	<span class="bookActive" >
+	         	 合计金额：<span class="sumCost">0元</span>
+		          		<a href="#popupLogin" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-a" data-transition="pop" aria-haspopup="true" aria-owns="popupLogin" aria-expanded="false" style="background-color:green;" onclick="saveOdder()">
+		          		预约
+		          		</a>
+		         </span>
+		        </div>
+	      </form>
+	      
+	      <div id="div_pay" style="display:none">
+				  <div class="modal-header">
+				    <h3 id="myPay">预订成功.<span id="xnjsd_span_3" style="display:none;">如需要校内结算单,请填写以下信息</span></h3>
+				  </div>
+				  <div class="modal-body" style="width:400px;height:100px;overflow:hidden;">
+					<form id="payFrm" action="/pay/payAction.do?ms=pay" method="post"> 
+						<span id="xnjsd_span_2" style="display:none;"> 
+						<input type="text" name="xm" id="xm" placeholder="姓名">
+						<input type="text" name="dept" id="dept" placeholder="单位">
+						</span>
+						<div style="display: none">
+							<input type="hidden" name="gymnasium_idForCache" value="3998000" />
+						      <input type="hidden" name="item_idForCache" value="4045681"/>
+						      <input type="hidden" name="time_dateForCache" value="2016-09-25"/>
+						      <input type="hidden" name="userTypeNumForCache" value="1"/>
+						      <table class="table table-striped table-bordered table-condensed">
+				             <thead>
+				             	<th>场地</th><th>时间</th><th>价格</th><th>&nbsp;</th>
+				             </thead>
+				              <tbody id="selectedInfoPay">
+				              </tbody>
+				            </table>
+						</div>
+					</form>
+					<span style="display:none">
+					<form id="payFrmLater" action="/pay/payAction.do?ms=saveXnjsd" method="post">  
+					<span id="xnjsd_span_1" style="display:none;">
+						姓名: <input type="text" name="xm" id="xmLater">
+						单位: <input type="text" name="dept" id="deptLater">
+						</span>
+						<div style="display: none">
+							<input type="hidden" name="gymnasium_idForCache" value="3998000" />
+						      <input type="hidden" name="item_idForCache" value="4045681"/>
+						      <input type="hidden" name="time_dateForCache" value="2016-09-25"/>
+						      <input type="hidden" name="userTypeNumForCache" value="1"/>
+						      <table class="table table-striped table-bordered table-condensed">
+				             <thead>
+				             	<th>场地</th><th>时间</th><th>价格</th><th>&nbsp;</th>
+				             </thead>
+				              <tbody id="selectedInfoPayLater">
+				              </tbody>
+				            </table>
+						</div>
+					</form>
+					</span>
+				  </div>
+				  <div class="modal-footer">
+				  	<button onclick="savePayFrmWithPay()" id="payRightNow">立即支付</button> 
+				    <button onclick="payLater()" id="payLater">稍后支付</button>
+				    <button onclick="window.location.reload()" id="returnYy">返回预约界面</button>
+				  </div>
+			</div>
+	      
+		    <div data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all">
+		    	<form style="padding:10px 20px;">
+		    		<h3>请填写手机号</h3>
+		    		<label for="un" class="ui-hidden-accessible" >手机号:</label>
+		    		<input type="text" name="user" id="phone_jq" value="" placeholder="手机号" data-theme="a"/>
+		    		<button onclick="saveContactInfo()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">提交</button>
+		    	</form>
+		    </div> 
+      
+      
+        
+      
+      
+	      <div class="box" id="box-1" style="display:none">
+	        <h4 class="box-header round-top">已预约场地信息</h4>
+	        <div class="box-container-toggle">
+	          <div class="box-content">
+	          
+	            <table class="table table-striped table-bordered table-condensed">
+	              <thead>
+	                <tr>
+	                  <th>场馆名称</th>
+	                  <th>场地</th>
+	                  <th>预约日期</th>
+	                  <th>预约价格</th>
+	                  <th>操作</th>
+	                </tr>
+	              </thead>
+	              <tbody>
+	              	
+	              	 
+	                <tr >
+	                  <td class="center" style="width:150px;table-layout: fixed;WORD-BREAK: break-all; WORD-WRAP: break-word">气膜馆</td>
+	                  <td class="center" style="width:150px;table-layout: fixed;WORD-BREAK: break-all; WORD-WRAP: break-word">气膜馆乒乓球场 (乒8)</td>
+	                  <td class="center" style="width:150px;table-layout: fixed;WORD-BREAK: break-all; WORD-WRAP: break-word">2016-09-27&nbsp;&nbsp;11:30-12:00</td>
+                	  <td class="center" style="width:150px;table-layout: fixed;WORD-BREAK: break-all; WORD-WRAP: break-word">5.0</td>
+	                  <td class="center" style="width:80px;">
+					  
+	                  
+			                  
+			                  	<a class="" style="color: black;cursor: pointer;" onclick="unsubscribe('7544898', '')">[退订] </a>
+			                  
+	                  
+	                  </td>
+	                </tr>
+	                
+	                <tr >
+	                  <td class="center" style="width:150px;table-layout: fixed;WORD-BREAK: break-all; WORD-WRAP: break-word">气膜馆</td>
+	                  <td class="center" style="width:150px;table-layout: fixed;WORD-BREAK: break-all; WORD-WRAP: break-word">气膜馆乒乓球场 (乒8)</td>
+	                  <td class="center" style="width:150px;table-layout: fixed;WORD-BREAK: break-all; WORD-WRAP: break-word">2016-09-27&nbsp;&nbsp;12:00-13:00</td>
+                	  <td class="center" style="width:150px;table-layout: fixed;WORD-BREAK: break-all; WORD-WRAP: break-word">10.0</td>
+	                  <td class="center" style="width:80px;">
+					  
+	                  
+			                  
+			                  	<a class="" style="color: black;cursor: pointer;" onclick="unsubscribe('7544899', '')">[退订] </a>
+			                  
+	                  
+	                  </td>
+	                </tr>
+	                
+	              </tbody>
+	            </table>
+							<form action="/gymbook/gymBookAction.do?ms=doUpdateContactInformation" method="post" id="stopForm">
+								<input name="t_partner" id="t_partner" type="hidden" />
+								<input name="t_out_trade_no" id="t_out_trade_no" type="hidden" />
+								<input name="t_item" id="t_item" type="hidden" />
+								<input name="t_name" id="t_name" type="hidden" />
+								<input name="t_total_fee" id="t_total_fee" type="hidden" />
+								<input name="t_username" id="t_username" type="hidden" />
+								<input name="t_return_url" id="t_return_url" type="hidden" />
+								<input name="t_datetime" id="t_datetime" type="hidden" />
+								<input name="t_version" id="t_version" type="hidden" />
+								<input name="t_sign" id="t_sign" type="hidden" />
+						   </form>
+	          </div>
+	          <!--/span-->
+	        </div>
+	      </div>
+      
+      
+    <!--/row-->
+	<!-- TODO: This should become an external panel so we can add input to markup (unique ID) -->
+    <div data-role="panel" class="jqm-search-panel" data-position="right" data-display="overlay" data-theme="a" style="z-index:10000;">		
+			<div>
+				<p style="font-size:15px;font-family:宋体;color:#8252B2;">欢迎您！&nbsp;胡皓宇</p>
+				<a href="#" onclick="javascript:goout();" class="btn btn-success" style="color:#000;">退出</a>
+			</div>
+				<div class="sidebar-nav">
+				<div class="well" style="padding: 8px 0;">
+				
+					<a onclick="chooseItem('3998000','','')">气膜馆</a>
+				
+					<a onclick="chooseItem('4797914','','')">综合体育馆</a>
+				
+					<a onclick="chooseItem('4836273','','')">西体育馆</a>
+				
+					<a onclick="chooseItem('5843934','','')">体育场</a>
+				
+				</div>
+			    </div>
+			  <!--/.well -->
+	</div><!-- /panel -->
+
+
+	</div><!-- /page -->
+	<!-- 添加手机号 -->
+<div id="contactModal" class="modal hide fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <h3 id="myModalLabel">请您添加您的手机号</h3>
+  </div>
+  <div class="modal-body">
+   <form action="/gymbook/gymBookAction.do?ms=doUpdateContactInformation" method="post" id="telform">
+   <input type="hidden" name="gzzh" value="2014210130">
+   	手机号码（必填）: <input type="text" name="cell_phone" id="cell_phone" value="">
+   	<input type="button" value="提交" onclick="saveContactInfo()">
+   </form>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal" id="phone_modal">关闭</a>
+  </div>
+</div>
+<div style="display:none">
+	<form action="/gymbook/gymBookAction.do?ms=doUpdateContactInformation" method="post" id="stopForm">
+		<input name="t_partner" id="t_partner"/>
+		<input name="t_out_trade_no" id="t_out_trade_no"/>
+		<input name="t_item" id="t_item"/>
+		<input name="t_name" id="t_name"/>
+		<input name="t_total_fee" id="t_total_fee"/>
+		<input name="t_username" id="t_username"/>
+		<input name="t_return_url" id="t_return_url"/>
+		<input name="t_datetime" id="t_datetime"/>
+		<input name="t_version" id="t_version"/>
+		<input name="t_sign" id="t_sign"/>
+   </form>
+</div>
+<form id="payFrmLaterLater" action="/pay/payAction.do?ms=payForLater" method="post">
+			<input type="hidden" id="book_ids" name="book_ids"/>  
+		</form>
+<!-- scripts -->
+<script type="text/javascript">
+$(document).on( "pagecreate", ".jqm-demos", function( event ) {
+    var search,
+	page = $( this ),
+	that = this,
+	searchUrl = ( $( this ).hasClass( "jqm-home" ) ) ? "_search/" : "../_search/",
+	searchContents = $( ".jqm-search ul.jqm-list" ).find( "li:not(.ui-collapsible)" ),
+	version = $.mobile.version || "dev",
+	words = version.split( "-" ),
+	ver = words[0],
+	str = words[1] || "",
+	text = ver;
+		// Global search
+	$( ".jqm-search-link" ).on( "click", function() {
+		page.find( ".jqm-search-panel" ).panel( "open" );
+	});
+	$(window).scroll(function() { 
+	var top = $(window).scrollTop()+200; 
+	$("#right-menu-button").css({top: top + "px" }); 
+	}); 
+	});
+</script>
+<script type="text/javascript">
+function chooseItem(gym_id,gym_item,time_date){
+	var url = "/gymbook/gymBookAction.do?ms=viewGymBook&gymnasium_id="+gym_id+"&item_id="+gym_item+"&time_date="+time_date+"&viewType=m";
+	document.location.href=url;
+}
+function  goout(){
+	if(confirm("确认退出")) {
+		window.location.href="/j_spring_security_logout";
+	}
+}
+function showMyRes() {
+		$("#bookFrm").hide();
+		$(".time_block").hide();
+		$("#needHide").hide();
+		$("#bookTableDiv").hide();
+		$("#box-1").show();
+		$(".tabs_active").removeClass();
+		$("#needShow").addClass("tabs_active");
+		
+}
+</script>
+	
+<script type="text/javascript">
+var limitBookDate = '3';
+var limitBookCount = '2';
+var time_date = '2016-09-25';
+var limitBookInit = '2';
+
+$(document).ready(function(){
+	var expiration_time = '';
+	if (expiration_time != '') {
+		$("#blackListWarning").html("<strong class='alert alert-error'>由于您的违规行为，您已被加入黑名单，在 " + expiration_time + " 之前无法网上预定，请等待或者联系管理员。</strong>");
+		$("#blackListWarning").css("display", "block");
+		$(".yuyueButton").css("display", "none");
+	}
+	$("#bookInfo").html("<strong class='alert alert-error'>为防止资源浪费，诚信记录及黑名单功能已正式上线，请同学们谨慎预约，按时到场，以防给您以后的订场带来不便。</strong>");
+	$("#bookrq").val('2016-09-25');
+	highLightDate($("#bookrq").val());
+	viewBookTable();
+});
+
+function viewBookTable() {
+	var gymId = '3998000';
+	var itemId = '4045681';
+	var timeDate='2016-09-25';
+	var userTypeNum = '1';
+	var url = "/gymsite/cacheAction.do?ms=viewBook&gymnasium_id="+gymId+"&item_id="+itemId+"&time_date="+timeDate+"&userType="+userTypeNum;
+	$("#bookTableDiv").html("<iframe name=\"overlayView\" width=\"100%\" frameborder=no  src=\""+url+"\" onload=\"this.height=this.contentWindow.document.documentElement.scrollHeight\"></iframe>");
+
+}
+
+
+function highLightDate(time_date) {
+	$(".datetime_").removeClass("red");
+	$(".datetime_").each(function() {
+		if ($(this).attr("value")==time_date) {
+			$(this).addClass("redfont");
+		}
+	});
+}
+//退订
+function unsubscribe(bookId) {
+	if(!confirm("确认取消场地!")) {
+		return;
+	}
+	var url = "gymbook/gymBookAction.do?ms=unsubscribe";
+	$.post(url,{bookId:bookId},function(msg){
+		alert(msg);
+		document.location.reload();
+	});
+}
+
+function unsubscribeOnline(bookId,tip,trade_jnl) {
+	if(""!=trade_jnl) {
+		if(!confirm("温馨提示:您的此预约订单已经提交过支付平台，订单号:"+trade_jnl+",如果您没有完成实际支付,请忽略此提示，继续完成退订;如果已完成实际支付，请耐心等待支付结果返回。")) {
+			return;
+		}
+	}
+	if(!confirm("确认取消场地!")) {
+		return;
+	}
+	var url = "gymbook/gymBookAction.do?ms=unsubscribe";
+	$.post(url,{bookId:bookId},function(msg){
+		alert(msg);
+		document.location.reload();
+	});
+}
+
+ function isLateForPay(time_date,tSession) {
+	var now = new Date();
+    var sd=time_date.split("-");
+    eval("sd[1]=" + sd[1] + "-1");
+    var dNow = new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+    var dTarget = new Date(sd[0],sd[1],sd[2]).getTime();
+	if( dNow < dTarget) {
+		return false;
+	}else{
+		if(dNow == dTarget){
+			var endHour = tSession.substr(0,tSession.indexOf('-'));
+			endHour = endHour.substring(0,endHour.indexOf(':'));
+			eval("endHour="+endHour+";");
+			if(now.getHours()+parseFloat(2.0)+1 <= endHour) {
+				return false;
+			}
+		}
+	}
+	
+	return true;
+}
+ function showSelected() {
+	 $("#payWayConfirm").removeAttr("disabled").html("提交订单");
+		$("#payWayCancel").removeAttr("disabled").html("取消");
+	if(!checkSelected()){
+		alert('没有选中的预约信息');
+		return;
+	}
+	var time_date;
+	var tSession;
+	$.each($(".ckSelected"),function(i,o){
+		if(o.checked){
+				var time_date_tSession = $(this).parent().prev().prev().html();
+			time_date = time_date_tSession.split(" ")[0];
+			tSession = time_date_tSession.split(" ")[1];
+			return;
+		}
+	});
+	 if('1'=='1') {
+		
+		if(isLateForPay(time_date,tSession)) {
+			$("#selectedPayWay").val("1");
+			$('#bookTableDiv').hide();
+			saveBookFrmWithPay();
+		}else {
+			$('#bookTableDiv').hide();
+			$('#selectPayWay').show();
+			$("#yyPullRight").hide();
+		}
+	}else {
+		saveBookFrmWithPay();
+	}
+} 
+
+function cancelChangeSelected() {
+	$('#selectPayWay').hide();
+	$('#bookTableDiv').show();
+	$("#yyPullRight").show();
+	$("#payWayConfirm").attr("disabled","disabled").html("正在提交...");
+	$("#payWayCancel").attr("disabled","disabled").html("前往取消。。。");
+}
+
+var selectPayWay ="";
+function changeSelected() {
+	if($("#selectPayWay1").prop("checked")) {
+		$("#selectedPayWay").val("1");
+		selectPayWay = "1";
+	}else {
+		$("#selectedPayWay").val("0");
+		selectPayWay = "0"
+	}
+	$('#selectPayWay').hide();
+	$("#payWayConfirm").attr("disabled","disabled").html("正在提交...");
+	$("#payWayCancel").attr("disabled","disabled").html("前往取消...");
+	saveBookFrmWithPay();
+}
+
+function saveBookFrmWithPay(isPrintStub){
+	$("#payRightNow").show();
+	$("#payLater").html("稍后支付");
+	if(!checkSelected()){
+		alert('没有选中的预约信息');
+		return;
+	}
+	$("#selectedInfoPay").html("");
+	
+	ajaxSubmit('bookFrm', function(dataStr){
+		submitFlag = false;
+		var data = $.parseJSON(dataStr);
+		if('预定成功' == data.msg) {
+			$("#xnjsd_span_1").hide();
+			$("#xnjsd_span_2").hide();
+			$("#xnjsd_span_3").hide();
+			if('1'==selectPayWay) {
+				$("#xnjsd_span_1").show();
+				$("#xnjsd_span_2").show();
+				$("#xnjsd_span_3").show();
+			}
+			if('1'=='1'&&'1'==$("#selectedPayWay").val()) {
+				$("#selectedInfoPay").html($("#selectedInfo").html());
+				$("#selectedInfoPayLater").html($("#selectedInfo").html());
+				$('#div_pay').show();
+			}else {
+				alert(data.msg);
+				window.location.reload();
+				/* $("#selectedInfoPay").html($("#selectedInfo").html());
+				$("#selectedInfoPayLater").html($("#selectedInfo").html());
+				$("#payRightNow").hide();
+				$("#payLater").html("提交(如不需要可不填)");
+				$('#div_pay').show(); */
+			}
+		}else {
+			alert(data.msg);
+			window.location.reload();
+		}
+
+	});
+}
+
+function saveOdder() {
+	//增加判断，是否已添加联系方式
+	var url = "/gymbook/gymBookAction.do?ms=hadContactOrNot";
+	$.post(url,{},function(msg){
+		if("do_not" == msg){
+			//$('#all_screen').modal('show');
+			//$('#contactModal').modal('show');
+			$("#popupLogin").show();
+		}else{
+			$("#book_person_phone").val(msg);
+			$("#popupLogin").hide();
+			showSelected();
+		}
+	});
+}
+
+function changeDateThis(gymnasium_id,item_id,userType,dayLimit,date) {
+	//学生预约选择日期
+	var time_date = $("#bookrq").val();
+	if(dayLimit){
+		if(!isDateIn(date,dayLimit)){
+			alert("尚无数据");
+			return;
+		}
+	}
+	var url = "/gymbook/gymBookAction.do?ms=viewGymBook&gymnasium_id="+gymnasium_id+"&item_id="+item_id+"&time_date="+date+"&userType="+userType+"&viewType=m";
+	document.location.href=url;
+}
+function saveContactInfo(){
+		$("#cell_phone").val($("#phone_jq").val());
+		var cell_p = $("#cell_phone").val();
+		if(cell_p == ""){
+			alert("手机号不能为空！");
+			return false;
+		}
+		var ab=/^(1[3-8][0-9]|15[0|3|6|7|8|9]|18[8|9])\d{8}$/;
+
+	  if(ab.test(cell_p) == false)
+	  {
+	    alert("请正确填写手机号码!");
+	    return false;
+	  }
+	  $.ajax({
+		  url:"/gymbook/gymBookAction.do?ms=doUpdateContactInformation&cell_phone="+cell_p+"&gzzh=2014210130",
+			type:"post",
+			success:function() {
+				alert("保存成功！");
+				$("#book_person_phone").val(msg);
+				$("#popupLogin").hide();
+				showSelected();
+			}
+			
+	  });
+	}
+	
+function payNow(ids,trade_jnl) {
+	if(""!=trade_jnl) {
+		if(!confirm("温馨提示:您的此预约订单已经提交过支付平台，订单号:"+trade_jnl+",如果您没有完成实际支付,请继续，如果已完成实际支付，请耐心等待支付结果返回。")) {
+			return;
+		}
+	}
+	$("#book_ids").val(ids);
+	ajaxSubmit('payFrmLaterLater', function(msg){
+		if(msg=="fail") {
+			alert("提交支付请求未授理，请检查您的网络连接情况，稍后再试");
+		}else {
+			var o = eval("("+msg+")");
+			$("#stopForm").attr("action",o.req_url);
+			$("#t_partner").val(o.t_partner);
+			$("#t_out_trade_no").val(o.t_out_trade_no);
+			$("#t_item").val(o.t_item);
+			$("#t_name").val(o.t_name);
+			$("#t_total_fee").val(o.t_total_fee);
+			$("#t_username").val(o.t_username);
+			$("#t_return_url").val(o.t_return_url);
+			$("#t_datetime").val(o.t_datetime);	
+			$("#t_version").val(o.t_version);	
+			$("#t_sign").val(o.t_sign);
+			$("#stopForm").submit();
+		}
+	});
+}
+var now_sys=1474802995668;
+var count=0;
+$(document).ready(function() {
+	setInterval("refreshTimeEx()",1000);
+});
+function refreshTimeEx() {
+	count++;
+	$("span[time]").each(function() {
+		var nowLeftTime = 15*60-(parseFloat(now_sys+"")-parseFloat($(this).attr("time")+""))/1000-count;
+		if(nowLeftTime<0) {
+			$(this).html("正在取消您的订单");
+			$(this).next().next().hide();
+			if(nowLeftTime<-30) {
+				$(this).removeAttr("time");
+				$(this).parent().parent().hide();
+			}
+		}else {
+			$(this).parent().parent().show();
+			var timeStr = /* parseInt(nowLeftTime/3600)+"小时"+ */parseInt(nowLeftTime/60)+"分"+parseInt(nowLeftTime%60)+"秒";
+				//alert(nowLeftTime+":==refreshTime==: "+timeStr);
+				$(this).html(timeStr);
+				$(this).next().next().show();
+		}
+	});
+}
+function savePayFrmWithPay() {
+	$("#payRightNow").attr("disabled","disabled").html("正在提交...");
+	ajaxSubmit('payFrm', function(msg){
+		if(msg=="fail") {
+			alert("提交支付请求未授理，请检查您的网络连接情况，稍后再试");
+		}else {
+			var o = eval("("+msg+")");
+			$("#stopForm").attr("action",o.req_url);
+			$("#t_partner").val(o.t_partner);
+			$("#t_out_trade_no").val(o.t_out_trade_no);
+			$("#t_item").val(o.t_item);
+			$("#t_name").val(o.t_name);
+			$("#t_total_fee").val(o.t_total_fee);
+			$("#t_username").val(o.t_username);
+			$("#t_return_url").val(o.t_return_url);
+			$("#t_datetime").val(o.t_datetime);	
+			$("#t_version").val(o.t_version);	
+			$("#t_sign").val(o.t_sign);
+			$("#stopForm").submit();
+			$('#pay_process').modal('show');
+		}
+	});
+}
+function payLater() {
+	$("#xmLater").val($("#xm").val());
+	$("#deptLater").val($("#dept").val());
+	$("#payFrmLater").submit();
+}
+</script>
+</body>
+
+</html>

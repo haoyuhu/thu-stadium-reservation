@@ -1,0 +1,583 @@
+<!-- 学生网上预定 -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">
+<title>清华大学体育馆管理与网上预约系统</title>
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" id="main-theme-script">
+<link href="../css/themes/default.css" rel="stylesheet" id="theme-specific-script">
+<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link type="text/css" href="../page.css" rel="stylesheet" />
+<script type="text/javascript" src="../js/jquery/jquery-1.7.js" ></script>
+<link href="../css/simplenso.css" rel="stylesheet">
+<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js "></script>
+<script src="../scripts/jquery.cookie/jquery.cookie.js"></script>
+<script src="../scripts/simplenso/simplenso.js"></script>
+<script src="../My97DatePicker/WdatePicker.js"></script>
+
+<script src="../gymjs/gymcommon.js"></script>
+<script src="../gymjs/gymbook.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	initResourceTable(parent.limitBookDate,parent.limitBookCount,parent.time_date,parent.limitBookInit);
+
+		markStatusColor('4864019','老师','1','');
+
+		markStatusColor('4864023','老师','1','');
+
+		markStatusColor('4864048','老师','1','');
+
+		markStatusColor('4864052','老师','1','');
+
+		markStatusColor('4864077','培训','1','');
+
+		markStatusColor('4864081','老师','1','');
+
+		markStatusColor('4864106','培训','1','');
+
+		markStatusColor('4864110','老师','1','');
+
+		markStatusColor('4864135','培训','1','');
+
+		markStatusColor('4864139','培训','1','');
+
+		markStatusColor('4864164','培训','1','');
+
+		markStatusColor('4864168','学生','1','');
+
+		markStatusColor('4864193','老师','1','');
+
+		markStatusColor('4864197','老师','1','');
+
+		markStatusColor('4864222','老师','1','');
+
+		markStatusColor('4864226','老师','1','');
+
+});
+function markStatusColor(resId,userType,paymentStatus,present) {
+	//$("#resourceTd_"+resId).attr("userType",userType);
+	if(paymentStatus == '1'){
+		$("#resourceTd_"+resId).html("");
+		/* if(present == 'true') {
+			$("#resourceTd_"+resId).append("<font color='blue'>已到场</font>");
+		}else{
+			//$("#resourceTd_"+resId).append("<font color='green'>已交费</font>");
+		} */
+	}else{
+		$("#resourceTd_"+resId).html("<font color='red'>未交费</font>");
+	}
+}
+</script>
+</head>
+<!-- 显示预约情况的表格 -->
+<!-- 显示场馆资源的表格 -->
+
+<style type="text/css">
+
+#resourceTable {
+	border-collapse: collapse;
+	border-style:solid;
+  	border-width:3px;
+
+	vertical-align: middle;
+	font-size: 12px;
+	Table-layout: fixed;
+}
+
+#resourceTable th {
+	text-align: center;
+	padding: 0 0 0 0;
+	border-style:solid;
+	border-width:2px;
+	line-height: 20px;
+	word-wrap: break-word;
+	width: 5.5%;
+}
+
+#resourceTable td {
+	text-align: center;
+	padding: 0 0 0 0;
+	border-style:solid;
+	border-width:2px;
+	line-height: 20px;
+	word-wrap: break-word;
+}
+#resourceTable .datetime {
+	width: 10%;
+}
+</style>
+<input type="hidden" id="forMode" value="yuding"/>
+<input type="hidden" id="forbidName" value=""/>
+<input type="hidden" id="forbidReason" value=""/>
+<p id="forbidReasonShow"></p>
+<table id="resourceTable" style="font-size:10px">
+</table>
+<script>
+function Map() {
+    this.elements = new Array();
+
+    //获取MAP元素个数
+    this.size = function() {
+        return this.elements.length;
+    };
+
+    //判断MAP是否为空
+    this.isEmpty = function() {
+        return (this.elements.length < 1);
+    };
+
+    //删除MAP所有元素
+    this.clear = function() {
+        this.elements = new Array();
+    };
+
+    //向MAP中增加元素（key, value)
+    this.put = function(_key, _value) {
+   		if(this.containsKey(_key)) {
+    		this.remove(_key);
+    	}
+        this.elements.push( {
+            key : _key,
+            value : _value
+        });
+    };
+
+    //删除指定KEY的元素，成功返回True，失败返回False
+    this.remove = function(_key) {
+        var bln = false;
+        try {
+            for (i = 0; i < this.elements.length; i++) {
+                if (this.elements[i].key == _key) {
+                    this.elements.splice(i, 1);
+                    return true;
+                }
+            }
+        } catch (e) {
+            bln = false;
+        }
+        return bln;
+    };
+
+    //获取指定KEY的元素值VALUE，失败返回NULL
+    this.get = function(_key) {
+        try {
+            for (i = 0; i < this.elements.length; i++) {
+                if (this.elements[i].key == _key) {
+                    return this.elements[i].value;
+                }
+            }
+        } catch (e) {
+            return null;
+        }
+    };
+
+    //获取指定索引的元素（使用element.key，element.value获取KEY和VALUE），失败返回NULL
+    this.element = function(_index) {
+        if (_index < 0 || _index >= this.elements.length) {
+            return null;
+        }
+        return this.elements[_index];
+    };
+
+    //判断MAP中是否含有指定KEY的元素
+    this.containsKey = function(_key) {
+        var bln = false;
+        try {
+            for (i = 0; i < this.elements.length; i++) {
+                if (this.elements[i].key == _key) {
+                    bln = true;
+                }
+            }
+        } catch (e) {
+            bln = false;
+        }
+        return bln;
+    };
+
+    //判断MAP中是否含有指定VALUE的元素
+    this.containsValue = function(_value) {
+        var bln = false;
+        try {
+            for (i = 0; i < this.elements.length; i++) {
+                if (this.elements[i].value == _value) {
+                    bln = true;
+                }
+            }
+        } catch (e) {
+            bln = false;
+        }
+        return bln;
+    };
+
+    //获取MAP中所有VALUE的数组（ARRAY）
+    this.values = function() {
+        var arr = new Array();
+        for (i = 0; i < this.elements.length; i++) {
+            arr.push(this.elements[i].value);
+        }
+        return arr;
+    };
+
+    //获取MAP中所有KEY的数组（ARRAY）
+    this.keys = function() {
+        var arr = new Array();
+        for (i = 0; i < this.elements.length; i++) {
+            arr.push(this.elements[i].key);
+        }
+        return arr;
+    };
+}
+
+
+function myserialize(objs){
+	var parmString = $(objs).serialize();
+	var parmArray = parmString.split("&");
+	var parmStringNew="";
+	$.each(parmArray,function(index,data){
+	var li_pos = data.indexOf("=");
+	if(li_pos >0){
+		var name = data.substring(0,li_pos);
+		var value = escape(decodeURIComponent(data.substr(li_pos+1)));
+		var parm = name+"="+value;
+		parmStringNew = parmStringNew=="" ? parm : parmStringNew + '&' + parm;
+	}
+	});
+	return parmStringNew;
+}
+
+
+function ajaxSubmit(formId,callback,nowait) {
+	var params = myserialize($("#"+formId));
+	if(!nowait) {
+		$("#myWait").show();
+	}
+	$.ajax({
+	type:'POST',
+	url:$("#"+formId).attr("action"),
+	data:params,
+	success: function(dataMsg){
+		if(callback){
+			callback(dataMsg);
+		}
+		if(!nowait) {
+			$("#myWait").hide();
+		}
+	}
+  });
+}
+
+function isEmpty(value){
+    return /^\s*$/.test(value);
+}
+
+
+function isDateIn(dateStr,limitCount){
+	var now = new Date();    //结束时间
+	dateStr = dateStr.replace(/-/g,"/");
+	var date = new Date(dateStr);
+	var timeDiffer = date.getTime() - now.getTime();  //时间差的毫秒数
+	//计算出相差天数
+	var dayDiffer=parseInt(timeDiffer / (1000 * 60 * 60 * 24));
+	if(dayDiffer < 0) {
+		return false;
+	}
+	return dayDiffer < limitCount;
+}
+
+Date.prototype.format = function(format) {
+    var o =
+    {
+        "M+" : this.getMonth()+1, //month
+        "d+" : this.getDate(),    //day
+        "h+" : this.getHours(),   //hour
+        "m+" : this.getMinutes(), //minute
+        "s+" : this.getSeconds(), //second
+        "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+        "S" : this.getMilliseconds() //millisecond
+    }
+    if(/(y+)/.test(format))
+    format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    for(var k in o)
+    if(new RegExp("("+ k +")").test(format))
+    format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    return format;
+}
+</script>
+<script>
+	//点击表格头部关联点击整列
+	var forUsual = false;
+	function clickth(thobj) {
+		forUsual = false;
+		 var thisIndex = $(thobj).index();
+		var tds = $(thobj).parent().parent().find("td");
+		var forModeVal = $("#forMode").val();
+		if(forModeVal=="xuanze") {
+			tds.each(function(){
+				if($(this).index()==thisIndex) {
+					$(this).trigger('click');
+				}
+			});
+		}else {
+			tds.each(function(){
+				if(!forUsual) {
+					if($(this).index()==thisIndex && typeof($(this).attr("bookId"))=="undefined") {
+						$(this).trigger('click');
+					}
+				}
+			});
+		}
+	}
+	//点击表格行首关联整行
+	function clicktr(thobj) {
+		forUsual = false;
+		var tds = $(thobj).parent().find("td");
+		var forModeVal = $("#forMode").val();
+		if(forModeVal=="xuanze") {
+			tds.each(function(){
+					$(this).trigger('click');
+			});
+		}else {
+			tds.each(function(){
+				if(!forUsual) {
+					if(typeof($(this).attr("bookId"))=="undefined") {
+						$(this).trigger('click');
+					}
+				}
+			});
+		}
+	}
+	//点击表格行首关联全部
+	function clickAll(thobj) {
+		forUsual = false;
+		var tds = $(thobj).parent().parent().find("td");
+		var forModeVal = $("#forMode").val();
+		if(forModeVal=="xuanze") {
+			tds.each(function(){
+					$(this).trigger('click');
+			});
+		}else {
+			tds.each(function(){
+				if(!forUsual) {
+					if(typeof($(this).attr("bookId"))=="undefined") {
+						$(this).trigger('click');
+					}
+				}
+			});
+		}
+		$(thobj).attr("style","cursor:pointer;background-color:#00FFFF");
+	}
+	var item_name = '';
+	function renderTable(){
+		var resourceArray = new Array();
+
+		resourceArray.push({id:'4864019',time_session:'18:30-20:30',field_name:'羽1',overlaySize:'4'});
+
+		resourceArray.push({id:'4864048',time_session:'18:30-20:30',field_name:'羽2',overlaySize:'4'});
+
+		resourceArray.push({id:'4864077',time_session:'18:30-20:30',field_name:'羽3',overlaySize:'4'});
+
+		resourceArray.push({id:'4864106',time_session:'18:30-20:30',field_name:'羽4',overlaySize:'4'});
+
+		resourceArray.push({id:'4864135',time_session:'18:30-20:30',field_name:'羽5',overlaySize:'4'});
+
+		resourceArray.push({id:'4864164',time_session:'18:30-20:30',field_name:'羽6',overlaySize:'4'});
+
+		resourceArray.push({id:'4864193',time_session:'18:30-20:30',field_name:'羽7',overlaySize:'4'});
+
+		resourceArray.push({id:'4864222',time_session:'18:30-20:30',field_name:'羽8',overlaySize:'4'});
+
+		resourceArray.push({id:'4864023',time_session:'20:30-22:30',field_name:'羽1',overlaySize:'4'});
+
+		resourceArray.push({id:'4864052',time_session:'20:30-22:30',field_name:'羽2',overlaySize:'4'});
+
+		resourceArray.push({id:'4864081',time_session:'20:30-22:30',field_name:'羽3',overlaySize:'4'});
+
+		resourceArray.push({id:'4864110',time_session:'20:30-22:30',field_name:'羽4',overlaySize:'4'});
+
+		resourceArray.push({id:'4864139',time_session:'20:30-22:30',field_name:'羽5',overlaySize:'4'});
+
+		resourceArray.push({id:'4864168',time_session:'20:30-22:30',field_name:'羽6',overlaySize:'4'});
+
+		resourceArray.push({id:'4864197',time_session:'20:30-22:30',field_name:'羽7',overlaySize:'4'});
+
+		resourceArray.push({id:'4864226',time_session:'20:30-22:30',field_name:'羽8',overlaySize:'4'});
+
+
+		var head = new Map();
+		var trs = new Map();
+
+		$.each(resourceArray,function(i,o){
+			head.put(o.field_name,o.field_name);
+
+			var trArray = trs.get(o.time_session);
+			if(!trArray) {
+				trArray = new Array();
+				trs.put(o.time_session,trArray);
+			}
+			trArray.push(o);
+		});
+
+		//make Th
+		if(trs.size()==0) {
+			$("#resourceTable").append("<h4>该场地在此时段不开放网上预约</h4>");
+		}else {
+			var thHtml = "<tr><th onclick='clickAll(this)' onmouseover=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseout=\"this.style.cssText='cursor:pointer'\" onmousedown=\"this.style.cssText='cursor:progress;background-color:blue'\">"+item_name+"</th>";
+			$.each(head.keys(),function(i,o){
+				thHtml += "<th onclick='clickth(this)' onmouseup=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseover=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseout=\"this.style.cssText='cursor:pointer'\" onmousedown=\"this.style.cssText='cursor:pointer;background-color:blue'\">"+o+"</th>";
+			});
+			thHtml += "</tr>";
+			$("#resourceTable").append(thHtml);
+			$.each(trs.keys(),function(i,trName){
+				var trHtml = "<tr class='resourceTr' ><th class='datetime' onclick='clicktr(this)' onmouseup=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseover=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseout=\"this.style.cssText='cursor:pointer'\" onmousedown=\"this.style.cssText='cursor:pointer;background-color:blue'\">"+trName+"</th>";
+				$.each(trs.get(trName),function(i2,resObj){
+					trHtml += "<td class='resourceTd' id='resourceTd_"+resObj.id+"' fieldName=\""+resObj.field_name+"\" time_session=\""+resObj.time_session+"\" overlaySize=\""+resObj.overlaySize+"\"  resource_id = \""+resObj.id+"\" >&nbsp;<div id='res_div_"+resObj.id+"' class='simpleDiv'></div></td>";
+				});
+				trHtml += "</tr>";
+				$("#resourceTable").append(trHtml);
+			});
+		}
+	}
+
+	renderTable();
+</script>
+
+<script>
+
+	//add 状态
+	function markResStatus(bookId,resId,status) {
+		$("#resourceTd_"+resId).attr("bookId",bookId);
+		if(status == '1'){
+			$("#resourceTd_"+resId).attr("lock","true");
+			$("#resourceTd_"+resId).css("background","yellow");
+		}
+	}
+	//updateInTime
+
+		markResStatus('7467577','4864019','1');
+
+		markResStatus('7450398','4864023','1');
+
+		markResStatus('7467581','4864048','1');
+
+		markResStatus('7450402','4864052','1');
+
+		markResStatus('7461435','4864077','1');
+
+		markResStatus('7470806','4864081','1');
+
+		markResStatus('7461439','4864106','1');
+
+		markResStatus('7450406','4864110','1');
+
+		markResStatus('7461443','4864135','1');
+
+		markResStatus('7454576','4864139','1');
+
+		markResStatus('7461447','4864164','1');
+
+		markResStatus('7494783','4864168','1');
+
+		markResStatus('7451325','4864193','1');
+
+		markResStatus('7445228','4864197','1');
+
+		markResStatus('7451526','4864222','1');
+
+		markResStatus('7466945','4864226','1');
+
+	//updateForUnsubscribe
+
+
+	//设置td时间值以及是否过期 (格式 '5:00-6:00') 超过结束时间算过期
+	function isLate(time_date,tSession) {
+		var now = new Date();
+	    var sd=time_date.split("-");
+	    eval("sd[1]=" + sd[1] + "-1");
+	    var dNow = new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+	    var dTarget = new Date(sd[0],sd[1],sd[2]).getTime();
+		if( dNow > dTarget) {
+			return true;
+		}else{
+			if(dNow == dTarget){
+				var endHour = tSession.substr(tSession.indexOf('-') + 1);
+				endHour = endHour.substring(0,endHour.indexOf(':'));
+				eval("endHour="+endHour+";");
+
+				if(now.getHours() >= endHour) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+
+  	var time_date = '2016-09-27';
+	$.each($(".resourceTd"),function(i,o){
+		$(o).attr("time_date",time_date);
+		var tdTime_session = $(o).attr("time_session");
+		if(isLate(time_date,tdTime_session)) {
+			$(o).attr("isLate","true");
+		}
+	});
+
+
+	//添加价格
+	function addCost(resId,cost) {
+		var resTdId="resourceTd_"+resId;
+		$("#"+resTdId).attr("cost",cost);
+	}
+
+
+		addCost('4864019','40.0');
+
+		addCost('4864023','40.0');
+
+		addCost('4864048','40.0');
+
+		addCost('4864052','40.0');
+
+		addCost('4864077','20.0');
+
+		addCost('4864081','20.0');
+
+		addCost('4864106','40.0');
+
+		addCost('4864110','40.0');
+
+		addCost('4864135','40.0');
+
+		addCost('4864139','40.0');
+
+		addCost('4864164','20.0');
+
+		addCost('4864168','20.0');
+
+		addCost('4864193','40.0');
+
+		addCost('4864197','40.0');
+
+		addCost('4864222','40.0');
+
+		addCost('4864226','40.0');
+
+
+
+	//管理员临时指定禁止网上预定
+
+
+</script>
