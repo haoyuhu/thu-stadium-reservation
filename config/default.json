@@ -1,0 +1,45 @@
+{
+  "account": "huhaoyu",
+  "mail_account": {
+    "sender": "61902279@qq.com",
+    "username": "61902279",
+    "password": "jymsxcuznczebihg",
+    "nickname": "badminton-group",
+    "host": "smtp.qq.com",
+    "port": 465,
+    "title": "[NEW RESERVATION] hello %s, this is a new badminton reservation",
+    "content": "Location: %s;\nDatetime: %s;\nAccount: %s;\nCost: %d.\n\nMade by thu-stadium on %s"
+  },
+  "receivers": [
+    {
+      "nickname": "hahahu",
+      "address": "im@huhaoyu.com"
+    }
+  ],
+  "unit": {
+    "time": "hour",
+    "week": [
+      "Mon.",
+      "Tues.",
+      "Wed.",
+      "Thur.",
+      "Fri.",
+      "Sat.",
+      "Sun."
+    ],
+    "section": {
+      "morning": {
+        "start": "8:00",
+        "end": "12:00"
+      },
+      "afternoon": {
+        "start": "12:00",
+        "end": "18:00"
+      },
+      "evening": {
+        "start": "18:00",
+        "end": "22:00"
+      }
+    }
+  }
+}

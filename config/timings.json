@@ -1,0 +1,17 @@
+{
+  "default": {
+    "interval": 1800
+  },
+  "specials": [
+    {
+      "interval": 1,
+      "start": "8:00",
+      "end": "8:05"
+    },
+    {
+      "interval": 60,
+      "start": "14:55",
+      "end": "15:05"
+    }
+  ]
+}

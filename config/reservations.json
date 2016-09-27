@@ -1,0 +1,39 @@
+[
+  [
+    {
+      "sport_type": "badminton",
+      "week": 5,
+      "wish": {
+        "start": "20:00",
+        "end": "22:00"
+      },
+      "length": 2,
+      "section": "evening",
+      "fixed": false
+    },
+    {
+      "sport_type": "badminton",
+      "week": 6,
+      "wish": {
+        "start": "20:00",
+        "end": "22:00"
+      },
+      "length": 2,
+      "section": "evening",
+      "fixed": false
+    }
+  ],
+  [
+    {
+      "sport_type": "badminton",
+      "week": 3,
+      "wish": {
+        "start": "17:00",
+        "end": "18:00"
+      },
+      "length": 1,
+      "section": "afternoon",
+      "fixed": true
+    }
+  ]
+]

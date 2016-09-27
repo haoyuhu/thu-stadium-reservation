@@ -1,0 +1,56 @@
+[
+  {
+    "name": "气膜馆",
+    "gymnasium_id": "3998000",
+    "sites": {
+      "badminton": {
+        "id": "4045681",
+        "exceptions": []
+      },
+      "pingpong": {
+        "id": "unknown",
+        "exceptions": []
+      },
+      "basketball": {
+        "id": "unknown",
+        "exceptions": []
+      }
+    }
+  },
+  {
+    "name": "综合体育馆",
+    "gymnasium_id": "4797914",
+    "sites": {
+      "badminton": {
+        "id": "4797899",
+        "exceptions": []
+      },
+      "pingpong": {
+        "id": "unknown",
+        "exceptions": []
+      },
+      "basketball": {
+        "id": "unknown",
+        "exceptions": []
+      }
+    }
+  },
+  {
+    "name": "西操场体育馆",
+    "gymnasium_id": "4836273",
+    "sites": {
+      "badminton": {
+        "id": "4836196",
+        "exceptions": []
+      },
+      "pingpong": {
+        "id": "unknown",
+        "exceptions": []
+      },
+      "basketball": {
+        "id": "unknown",
+        "exceptions": []
+      }
+    }
+  }
+]
