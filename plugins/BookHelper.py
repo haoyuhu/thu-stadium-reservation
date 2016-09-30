@@ -27,11 +27,13 @@ class BookHelper:
         config = Config()
         self.user = user
         self.stadiums = config.get_stadiums()
+        self.logger = config.get_logger()
         self.session = None
         self.records = None
         self.status = None
 
     def login(self):
+        self.logger.log('attempt to log in tsinghua info platform...')
         url = UrlBuilder().schema(UrlBuilder.SCHEMA_HTTP).host(Constants.THU_INFO_HOST).build()
         self.session = requests.session()
         r = self.session.get(url)
@@ -44,6 +46,7 @@ class BookHelper:
         success = 'result=1' in r.url
 
         if success:
+            self.logger.log('log in successfully, now redirect to 50.tsinghua...')
             url = UrlBuilder().schema(UrlBuilder.SCHEMA_HTTP).host(Constants.THU_INFO_HOST) \
                 .segments(Constants.THU_INFO_MAIN_PAGE_SEGMENTS).build()
             self.session.get(url, cookies=cookies)
@@ -52,16 +55,21 @@ class BookHelper:
                 .segments(Constants.THU_INFO_REDIRECT_TO_STADIUM_SEGMENTS).build()
             r = self.session.get(url, params=Constants.THU_INFO_REDIRECT_TO_STADIUM_QUERY_PARAMS, cookies=cookies)
             self.session.get(r.url)
+        else:
+            self.logger.log('fail to log in default account...')
         return success
 
     def get_records(self):
+        self.logger.log('now start to get reservation records...')
         url = UrlBuilder().schema(UrlBuilder.SCHEMA_HTTP).host(Constants.THU_STADIUM_HOST) \
             .segments(Constants.THU_STADIUM_MAIN_SEGMENTS).build()
         params = ViewQuery.get_view_reservation_params(self.stadiums[Stadium.AIR_STADIUM])
         r = self.session.get(url, params=params)
         if r.url.startswith(url):
+            self.logger.log('fetch reservation records successfully!')
             self.records = BookRecord.from_html(r.text)
         else:
+            self.logger.log('fail to fetch records, retry next time...')
             self.records = None
 
     def book(self, date_str, candidate):
@@ -79,6 +87,8 @@ class BookHelper:
                 while final_sites is None and iterator.has_next():
                     final_sites = site_list.find_available_site(iterator.current_item())
             if final_sites is not None:
+                self.logger.log('start to book site %s on %s with account %s...'
+                                % (final_sites[0].name, date_str, self.user.name))
                 query = BookQuery(final_sites[0].belong_to, date_str, final_sites, self.user)
                 data = query.get_reservation_params()
                 params = Constants.THU_STADIUM_BOOK_ACTION_QUERY_PARAMS
@@ -109,7 +119,6 @@ class BookHelper:
                     ymd = query.date.split('-')
                     index = calendar.weekday(int(ymd[0]), int(ymd[1]), int(ymd[2]))
                     weekday = Constants.WEEK_NAMES_EN[index]
-
                     ret = {
                         'location': stadium_name + site_name,
                         'book_datetime': book_date + ' ' + weekday + ' ' + book_time,
@@ -117,6 +126,12 @@ class BookHelper:
                         'cost': cost,
                         'curr_datetime': Common.format_datetime(datetime.now(), Common.DATETIME_PATTERN_YYYYMMDDHHMMSS)
                     }
+                    self.logger.log('sites booked successfully!', [
+                        'location: ' + ret['location'],
+                        'book datetime: ' + ret['book_datetime'],
+                        'owner: ' + ret['owner'],
+                        'cost: ' + ret['cost'],
+                    ])
         return ret
 
     def should_book(self, date_strings):
@@ -142,6 +157,7 @@ class BookHelper:
         return False
 
     def get_status(self, date_str, sport_type):
+        self.logger.log('start to fetch site status...')
         if self.status is not None and date_str in self.status.keys():
             return self.status[date_str]
 

@@ -15,13 +15,17 @@ class BookScheduler:
         self.tasks = None
         self.timings = None
         self.timer = None
+        self.logger = None
 
     def init(self):
         self.helper = BookHelper(self.config.get_default_account())
         self.tasks = self.config.get_reservation_tasks()
         self.timings = self.config.get_timings()
+        self.logger = self.config.get_logger()
 
     def run(self):
+        self.logger.log('thu-stadium-reservation ticking!')
+
         tomorrow = Common.get_tomorrow()
         day_after_tomorrow = Common.get_day_after_tomorrow()
         t_str = Common.format_date(tomorrow, Common.DATETIME_PATTERN_YYYYMMDD)
@@ -54,19 +58,21 @@ class BookScheduler:
         min_value = interval
 
         for item in self.timings.specials:
-            shm = item['start'].split(':')
-            ehm = item['end'].split(':')
+            shm = item.start.split(':')
+            ehm = item.end.split(':')
             s_time = BookScheduler.__get_time_in_second(int(shm[0]), int(shm[1]))
             e_time = BookScheduler.__get_time_in_second(int(ehm[0]), int(ehm[1]))
             if s_time <= time <= e_time:
                 if book_result:
                     interval = e_time - time + 1
                 else:
-                    interval = item['interval']
+                    interval = item.interval
                 break
             elif s_time > time:
                 min_value = min(min_value, s_time - time)
-        self.timer = Timer(min(min_value, interval), self.run())
+        next_ticking = min(min_value, interval)
+        self.timer = Timer(next_ticking, self.run())
+        self.logger.log('next ticking after %d seconds...' % next_ticking)
         self.timer.start()
 
     @staticmethod

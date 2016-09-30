@@ -10,6 +10,7 @@ from entities.BookRecord import BookRecord
 from plugins.BookHelper import SectionIterator
 from plugins.BookHelper import BookHelper
 from plugins.MailSender import MailSender
+from plugins.Logger import Logger
 from config.Config import Config
 from utils.Common import Common
 import datetime
@@ -154,6 +155,22 @@ def test_book_helper():
     after(success)
 
 
+def test_logger():
+    before('test logger')
+
+    logger = Logger(True)
+    logger.log('test title with no content')
+    logger.log('test title with contents', [
+        'content1: detail1',
+        'content2: detail2',
+        'content3: detail3'
+    ])
+    logger.debug = False
+    logger.log('test title when debug off')
+
+    after(True)
+
+
 def get_test_folder():
     return os.getcwd() + os.sep + 'tests'
 
@@ -169,4 +186,5 @@ test_config()
 test_site_list()
 test_book_record()
 test_section_iterator()
-test_book_helper()
+# test_book_helper()
+test_logger()

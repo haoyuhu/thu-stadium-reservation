@@ -3,6 +3,7 @@
 
 from utils.Singleton import Singleton
 from plugins.JsonReader import JsonReader
+from plugins.Logger import Logger
 from entities.User import User
 from entities.Stadium import Stadium
 from entities.Timing import Timing
@@ -51,6 +52,15 @@ class Config(Singleton):
             self.default_cache = Config.read_configs(Config.get_curr_abs_path(Config.DEFAULT_CONFIG_FILE_NAME))
         default_user = self.default_cache['account']
         return self.get_accounts()[default_user]
+
+    def get_logger(self):
+        """
+        :rtype: Logger
+        """
+        if self.default_cache is None:
+            self.default_cache = Config.read_configs(Config.get_curr_abs_path(Config.DEFAULT_CONFIG_FILE_NAME))
+        logger = Logger(self.default_cache['debug'])
+        return logger
 
     def get_stadiums(self):
         """
