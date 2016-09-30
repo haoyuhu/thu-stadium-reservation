@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from Stadium import Stadium
 from SiteStatus import SiteStatus
 from TimeInterval import TimeInterval

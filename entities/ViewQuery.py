@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from entities.Stadium import Stadium
 from entities.User import User
 from utils.Constants import Constants
@@ -20,7 +23,7 @@ class ViewQuery:
         return {
             'ms': Constants.THU_STADIUM_BOOK_ACTIONS['query'],
             'gymnasium_id': self.stadium.get_id(),
-            'item_id': self.stadium.get_site_info(self.sport_type),
+            'item_id': self.stadium.get_site_info(self.sport_type).get_id(),
             'time_date': self.date,
             'userType': Constants.THU_USER_TYPES[self.user.user_type]
         }

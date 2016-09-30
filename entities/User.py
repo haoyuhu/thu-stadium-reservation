@@ -1,5 +1,10 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
 class User:
-    def __init__(self, student_id, username, password, phone, user_type):
+    def __init__(self, name, student_id, username, password, phone, user_type):
+        self.name = name
         self.student_id = student_id
         self.username = username
         self.password = password
@@ -9,7 +14,7 @@ class User:
     def get_login_params(self):
         return {
             'redirect': 'NO',
-            'username': self.username,
+            'userName': self.username,
             'password': self.password,
             'x': 0,
             'y': 0

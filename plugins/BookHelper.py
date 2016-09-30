@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from entities.User import User
 from entities.Stadium import Stadium
 from entities.ViewQuery import ViewQuery
@@ -6,10 +9,14 @@ from entities.SiteList import SiteList
 from entities.TimeInterval import TimeInterval
 from entities.BookQuery import BookQuery
 from entities.ReservationCandidate import ReservationCandidate
+from plugins.MailSender import MailSender
 from config.Config import Config
 from utils.Constants import Constants
 from utils.UrlBuilder import UrlBuilder
+from utils.Common import Common
 import requests
+import calendar
+from datetime import datetime
 
 
 class BookHelper:
@@ -52,7 +59,7 @@ class BookHelper:
             .segments(Constants.THU_STADIUM_MAIN_SEGMENTS).build()
         params = ViewQuery.get_view_reservation_params(self.stadiums[Stadium.AIR_STADIUM])
         r = self.session.get(url, params=params)
-        if r.url == url:
+        if r.url.startswith(url):
             self.records = BookRecord.from_html(r.text)
         else:
             self.records = None
@@ -63,7 +70,7 @@ class BookHelper:
         :param ReservationCandidate candidate:
         """
         all_status = self.get_status(date_str, candidate.get_sport_type())
-        success = False
+        ret = False
         for site_list in all_status:
             wish = candidate.get_wish()
             final_sites = site_list.find_available_site(wish)
@@ -78,11 +85,43 @@ class BookHelper:
                 url = UrlBuilder().schema(UrlBuilder.SCHEMA_HTTP).host(Constants.THU_STADIUM_HOST).segments(
                     Constants.THU_STADIUM_BOOK_ACTION_SEGMENTS).build()
                 self.session.post(url, data=data, params=params)
-                success = not self.should_book([date_str])
-        return success
+                if not self.should_book([date_str]):
+                    stadium_name = query.stadium.name
+                    site_name = ''
+                    cost = 0.0
+                    book_start = None
+                    book_end = None
+                    book_date = query.date
+                    for field in query.fields:
+                        if not site_name.endswith(field.name):
+                            site_name += ' ' + field.name
+                        cost += field.cost
+                        if book_start is None:
+                            book_start = SectionIterator.decode(field.start)
+                        else:
+                            book_start = min(book_start, SectionIterator.decode(field.start))
+                        if book_end is None:
+                            book_end = SectionIterator.decode(field.end)
+                        else:
+                            book_end = max(book_end, SectionIterator.decode(field.end))
+                    book_time = TimeInterval(SectionIterator.encode(book_start),
+                                             SectionIterator.encode(book_end)).get_section_str()
+                    ymd = query.date.split('-')
+                    index = calendar.weekday(int(ymd[0]), int(ymd[1]), int(ymd[2]))
+                    weekday = Constants.WEEK_NAMES_EN[index]
+
+                    ret = {
+                        'location': stadium_name + site_name,
+                        'book_datetime': book_date + ' ' + weekday + ' ' + book_time,
+                        'owner': query.user.name,
+                        'cost': cost,
+                        'curr_datetime': Common.format_datetime(datetime.now(), Common.DATETIME_PATTERN_YYYYMMDDHHMMSS)
+                    }
+        return ret
 
     def should_book(self, date_strings):
-        self.get_records()
+        if self.session is not None:
+            self.get_records()
         if self.records is None:
             if self.login():
                 self.get_records()
@@ -123,6 +162,17 @@ class BookHelper:
 
     def clear_status(self):
         self.status = None
+
+    @staticmethod
+    def notify_all(info, account, receivers):
+        sender = MailSender(account['sender'], account['username'], account['password'], account['host'],
+                            account['port'])
+        content = account['content'] % (info['location'], info['book_datetime'], info['owner'], info['cost'],
+                                        info['curr_datetime'])
+
+        for receiver in receivers:
+            title = account['title'] % (receiver['nickname'])
+            sender.send(receiver, title, content, account['nickname'])
 
 
 class SectionIterator:

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from SiteCategory import SiteCategory
 
 
@@ -47,9 +50,9 @@ class Stadium:
         if sport_type == Stadium.BADMINTON:
             return self.badminton
         elif sport_type == Stadium.PINGPONG:
-            return self.PINGPONG
+            return self.pingpong
         elif sport_type == Stadium.BASKETBALL:
-            return self.BASKETBALL
+            return self.basketball
         return None
 
     @staticmethod

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from BookHelper import BookHelper
 from config.Config import Config
 from utils.Common import Common
@@ -29,9 +32,14 @@ class BookScheduler:
             for date_str in date_strings:
                 for task in self.tasks:
                     for candidate in task:
-                        if candidate.validate_date(date_str) and self.helper.book(date_str, candidate):
-                            self.__ticking(True)
-                            return
+                        if candidate.validate_date(date_str):
+                            ret = self.helper.book(date_str, candidate)
+                            if ret:
+                                account = self.config.get_mail_account()
+                                receivers = self.config.get_mail_receivers()
+                                self.helper.notify_all(ret, account, receivers)
+                                self.__ticking(True)
+                                return
 
         self.__ticking(False)
 
@@ -42,11 +50,10 @@ class BookScheduler:
         self.helper.clear_status()
         now = Common.get_today()
         time = BookScheduler.__get_time_in_second(now.hour, now.minute, now.second)
-        interval = self.timings['default']['interval']
-        specials = self.timings['specials']
+        interval = self.timings.interval
         min_value = interval
 
-        for item in specials:
+        for item in self.timings.specials:
             shm = item['start'].split(':')
             ehm = item['end'].split(':')
             s_time = BookScheduler.__get_time_in_second(int(shm[0]), int(shm[1]))

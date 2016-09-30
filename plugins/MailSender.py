@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header

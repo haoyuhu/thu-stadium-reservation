@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from utils.Constants import Constants
 from entities.Stadium import Stadium
 from entities.User import User
@@ -14,7 +17,6 @@ class BookQuery:
         """
         self.stadium = stadium
         self.date = date
-        self.fields = fields
         self.fields = fields
         self.user = user
         self.payment = payment

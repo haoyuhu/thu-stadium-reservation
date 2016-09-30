@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import re
 
 
@@ -41,3 +44,6 @@ class BookRecord:
                 if count > 3:
                     count = 0
         return ret
+
+    def to_tuple(self):
+        return self.stadium_name, self.site_name, self.date_str, self.start, self.end, self.cost

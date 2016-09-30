@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from utils.UrlBuilder import UrlBuilder
 from entities.SiteCategory import SiteCategory
 from entities.Stadium import Stadium
@@ -57,7 +60,7 @@ def test_mail_sender():
     sender = MailSender(account['sender'], account['username'], account['password'], account['host'], account['port'])
     receiver = receivers[0]
     title = account['title'] % (receiver['nickname'])
-    content = account['content'] % ('air stadium', '2016-9-20 Sunday 20:00-22:00', 'huhaoyu', 40,
+    content = account['content'] % ('air stadium', '2016-9-20 Sunday 20:00-22:00', 'huhaoyu', 40.0,
                                     Common.format_datetime(datetime.datetime.now()))
     print
     print 'from:', account['sender']

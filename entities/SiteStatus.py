@@ -1,4 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from entities.Stadium import Stadium
+from entities.TimeInterval import TimeInterval
 
 
 class SiteStatus:
@@ -27,4 +31,4 @@ class SiteStatus:
         self.cost = cost
 
     def get_section_str(self):
-        return self.start + '-' + self.end
+        return TimeInterval(self.start, self.end).get_section_str()

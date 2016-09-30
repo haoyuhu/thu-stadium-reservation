@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
 class UrlBuilder:
     SCHEMA_HTTP = 'http'
     SCHEMA_HTTPS = 'https'

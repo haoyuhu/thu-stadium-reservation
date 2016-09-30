@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from utils.Singleton import Singleton
 from plugins.JsonReader import JsonReader
 from entities.User import User
@@ -36,7 +39,7 @@ class Config(Singleton):
         if users is not None:
             for name in users:
                 item = users[name]
-                user = User(item['id'], item['username'], item['password'], item['phone'], item['user_type'])
+                user = User(name, item['id'], item['username'], item['password'], item['phone'], item['user_type'])
                 self.accounts_cache[name] = user
         return self.accounts_cache
 

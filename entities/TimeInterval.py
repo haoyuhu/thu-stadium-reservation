@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from utils.Constants import Constants
 
 
@@ -57,3 +60,6 @@ class TimeInterval:
         elif int(hm[0]) == int(ehm[0]):
             return int(hm[1]) <= int(ehm[1])
         return False
+
+    def get_section_str(self):
+        return self.start + '-' + self.end

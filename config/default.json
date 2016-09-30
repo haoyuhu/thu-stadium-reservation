@@ -8,7 +8,7 @@
     "host": "smtp.qq.com",
     "port": 465,
     "title": "[NEW RESERVATION] hello %s, this is a new badminton reservation",
-    "content": "Location: %s;\nDatetime: %s;\nAccount: %s;\nCost: %d.\n\nMade by thu-stadium on %s"
+    "content": "Location: %s;\nDatetime: %s;\nAccount: %s;\nCost: %.2f.\n\nMade by thu-stadium on %s"
   },
   "receivers": [
     {
