@@ -15,7 +15,7 @@
 * `section`为时间段（早上、下午、晚上）;
 * `fixed`为是否强制采用`wish`规定的起止时间。当`fixed`为`false`时，当没有找到符合`wish`的空余场地时，会在规定的`section`时间段内寻找符合`length`的空余场地。
 
-## accounts.js
+## accounts.json
 ```
 {
   "your_name": {
