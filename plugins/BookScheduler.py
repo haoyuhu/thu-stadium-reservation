@@ -5,7 +5,7 @@ from BookHelper import BookHelper
 from config.Config import Config
 from utils.Common import Common
 from utils.Constants import Constants
-from threading import Timer
+import time
 
 
 class BookScheduler:
@@ -53,7 +53,7 @@ class BookScheduler:
     def __ticking(self, book_result):
         self.helper.clear_status()
         now = Common.get_today()
-        time = BookScheduler.__get_time_in_second(now.hour, now.minute, now.second)
+        curr_time = BookScheduler.__get_time_in_second(now.hour, now.minute, now.second)
         interval = self.timings.interval
         min_value = interval
 
@@ -62,18 +62,18 @@ class BookScheduler:
             ehm = item.end.split(':')
             s_time = BookScheduler.__get_time_in_second(int(shm[0]), int(shm[1]))
             e_time = BookScheduler.__get_time_in_second(int(ehm[0]), int(ehm[1]))
-            if s_time <= time <= e_time:
+            if s_time <= curr_time <= e_time:
                 if book_result:
-                    interval = e_time - time + 1
+                    interval = e_time - curr_time + 1
                 else:
                     interval = item.interval
                 break
-            elif s_time > time:
-                min_value = min(min_value, s_time - time)
+            elif s_time > curr_time:
+                min_value = min(min_value, s_time - curr_time)
         next_ticking = min(min_value, interval)
-        self.timer = Timer(next_ticking, self.run())
         self.logger.log('next ticking after %d seconds...' % next_ticking)
-        self.timer.start()
+        time.sleep(next_ticking)
+        self.run()
 
     @staticmethod
     def __get_time_in_second(hour, minute, second=0):

@@ -130,7 +130,7 @@ class BookHelper:
                         'location: ' + ret['location'],
                         'book datetime: ' + ret['book_datetime'],
                         'owner: ' + ret['owner'],
-                        'cost: ' + ret['cost'],
+                        'cost: ' + str(ret['cost']),
                     ])
         return ret
 
