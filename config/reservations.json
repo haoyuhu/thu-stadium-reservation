@@ -1,6 +1,7 @@
 [
   [
     {
+      "available": false,
       "sport_type": "badminton",
       "week": 5,
       "wish": {
@@ -12,6 +13,7 @@
       "fixed": false
     },
     {
+      "available": true,
       "sport_type": "badminton",
       "week": 6,
       "wish": {
@@ -25,6 +27,7 @@
   ],
   [
     {
+      "available": false,
       "sport_type": "badminton",
       "week": 3,
       "wish": {

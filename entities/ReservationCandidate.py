@@ -6,7 +6,7 @@ import calendar
 
 
 class ReservationCandidate:
-    def __init__(self, sport_type, week, wish, length, section, fixed):
+    def __init__(self, available, sport_type, week, wish, length, section, fixed):
         """
         :param str sport_type:
         :param int week:
@@ -15,12 +15,16 @@ class ReservationCandidate:
         :param TimeInterval section:
         :param bool fixed:
         """
+        self.available = available
         self.sport_type = sport_type
         self.week = week
         self.wish = wish
         self.length = length
         self.section = section
         self.fixed = fixed
+
+    def is_available(self):
+        return self.available
 
     def is_fixed(self):
         return self.fixed
@@ -56,6 +60,7 @@ class ReservationCandidate:
         :rtype: ReservationCandidate
         """
         return ReservationCandidate(
+            obj['available'],
             obj['sport_type'],
             obj['week'],
             TimeInterval(obj['wish']['start'], obj['wish']['end']),
