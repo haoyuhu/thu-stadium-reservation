@@ -180,7 +180,7 @@ def test_scheduler():
         print 'current time: ' + str(time.time())
 
     scheduler = sched.scheduler(time.time, time.sleep)
-    scheduler.enter(5, 1, print_ticking, ())
+    scheduler.enter(2, 1, print_ticking, ())
     scheduler.run()
 
     after(True)
