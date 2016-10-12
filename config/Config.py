@@ -27,6 +27,7 @@ class Config(Singleton):
         self.timings_cache = None
         self.tasks_cache = None
         self.standard_sections_cache = None
+        self.logger = None
 
     def get_accounts(self):
         """
@@ -57,10 +58,10 @@ class Config(Singleton):
         """
         :rtype: Logger
         """
-        if self.default_cache is None:
+        if self.logger is None:
             self.default_cache = Config.read_configs(Config.get_curr_abs_path(Config.DEFAULT_CONFIG_FILE_NAME))
-        logger = Logger(self.default_cache['debug'])
-        return logger
+            self.logger = Logger(self.default_cache['debug'])
+        return self.logger
 
     def get_stadiums(self):
         """

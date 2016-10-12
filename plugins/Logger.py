@@ -1,16 +1,29 @@
 from utils.Singleton import Singleton
-from utils.Common import Common
-import datetime
+import logging
 
 
 class Logger(Singleton):
     def __init__(self, debug):
-        self.debug = debug
+        self.logger = logging.getLogger('thu-stadium-logger')
+        if debug:
+            level = logging.DEBUG
+        else:
+            level = logging.ERROR
+        self.logger.setLevel(level)
+
+        fh = logging.FileHandler('runtime.log')
+        fh.setLevel(logging.INFO)
+        ch = logging.StreamHandler()
+        ch.setLevel(level)
+
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        fh.setFormatter(formatter)
+        ch.setFormatter(formatter)
+
+        self.logger.addHandler(fh)
+        self.logger.addHandler(ch)
 
     def log(self, title, contents=list()):
-        if not self.debug:
-            return False
-        print '[%s] %s' % (Common.format_datetime(datetime.datetime.now()), title)
+        self.logger.debug(title)
         for content in contents:
-            print content
-        return True
+            self.logger.debug(content)
