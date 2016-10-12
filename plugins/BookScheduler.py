@@ -5,10 +5,12 @@ from BookHelper import BookHelper
 from config.Config import Config
 from utils.Common import Common
 from utils.Constants import Constants
-import time
+import threading
 
 
 class BookScheduler:
+    DEFAULT_PRIORITY = 1
+
     def __init__(self):
         self.config = Config()
         self.helper = None
@@ -78,8 +80,9 @@ class BookScheduler:
             next_ticking = min(min_value, interval)
 
         self.logger.log('next ticking after %d seconds...' % next_ticking)
-        time.sleep(next_ticking)
-        self.run()
+        timer = threading.Timer(next_ticking, self.run)
+        timer.start()
+        self.logger.log('ticking down...')
 
     @staticmethod
     def __get_time_in_second(hour, minute, second=0):
