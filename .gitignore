@@ -3,3 +3,4 @@
 *.pyc
 
 accounts.json
+*.log
