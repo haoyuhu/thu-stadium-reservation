@@ -1,3 +1,7 @@
+## required
+* requests: http://docs.python-requests.org/en/master/
+* pywin32: https://sourceforge.net/projects/pywin32/files/pywin32/
+
 ## `unit`
 * `time`: 时间单位为`second/minute/hour`；
 * `week`: 从周一至周日分别对应0-6；
