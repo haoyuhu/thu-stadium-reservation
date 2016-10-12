@@ -15,6 +15,8 @@ from config.Config import Config
 from utils.Common import Common
 import datetime
 import os
+import sched
+import time
 
 
 def before(name):
@@ -171,6 +173,19 @@ def test_logger():
     after(True)
 
 
+def test_scheduler():
+    before('test scheduler')
+
+    def print_ticking():
+        print 'current time: ' + str(time.time())
+
+    scheduler = sched.scheduler(time.time, time.sleep)
+    scheduler.enter(5, 1, print_ticking, ())
+    scheduler.run()
+
+    after(True)
+
+
 def get_test_folder():
     return os.getcwd() + os.sep + 'tests'
 
@@ -188,3 +203,4 @@ test_book_record()
 test_section_iterator()
 # test_book_helper()
 test_logger()
+test_scheduler()
