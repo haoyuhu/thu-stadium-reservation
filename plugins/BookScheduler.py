@@ -17,6 +17,7 @@ class BookScheduler:
         self.tasks = None
         self.timings = None
         self.logger = None
+        self.timer = None
 
     def init(self):
         self.helper = BookHelper(self.config.get_default_account())
@@ -80,9 +81,17 @@ class BookScheduler:
             next_ticking = min(min_value, interval)
 
         self.logger.log('next ticking after %d seconds...' % next_ticking)
-        timer = threading.Timer(next_ticking, self.run)
-        timer.start()
+        self.timer = threading.Timer(next_ticking, self.run)
+        self.timer.start()
         self.logger.log('ticking down...')
+
+    def start(self):
+        self.run()
+
+    def stop(self):
+        if self.timer is not None:
+            self.timer.cancel()
+            self.timer = None
 
     @staticmethod
     def __get_time_in_second(hour, minute, second=0):
