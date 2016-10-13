@@ -12,7 +12,7 @@ class Logger(Singleton):
         self.logger.setLevel(level)
 
         fh = logging.FileHandler('runtime.log')
-        fh.setLevel(logging.INFO)
+        fh.setLevel(level)
         ch = logging.StreamHandler()
         ch.setLevel(level)
 
