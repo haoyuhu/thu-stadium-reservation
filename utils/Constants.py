@@ -11,6 +11,7 @@ class Constants:
     TIME_UNIT_HOUR = 24
     WEEK_NAMES_EN = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
+    REQUEST_TIMEOUT = 1
     THU_SCHEMA = UrlBuilder.SCHEMA_HTTP
 
     THU_USER_TYPES = {

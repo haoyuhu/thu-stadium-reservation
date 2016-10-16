@@ -30,9 +30,11 @@ class BookScheduler:
 
         tomorrow = Common.get_tomorrow()
         day_after_tomorrow = Common.get_day_after_tomorrow()
+        more = Common.get_datetime_with_interval(3)
         t_str = Common.format_date(tomorrow, Common.DATETIME_PATTERN_YYYYMMDD)
         dat_str = Common.format_date(day_after_tomorrow, Common.DATETIME_PATTERN_YYYYMMDD)
-        date_strings = self.helper.should_book([t_str, dat_str])
+        more_str = Common.format_date(more, Common.DATETIME_PATTERN_YYYYMMDD)
+        date_strings = self.helper.should_book([t_str, dat_str, more_str])
 
         has_task = False
         if date_strings:
@@ -58,9 +60,9 @@ class BookScheduler:
         now = Common.get_today()
         curr_time = BookScheduler.__get_time_in_second(now.hour, now.minute, now.second)
 
-        if not has_task_today:
-            next_ticking = BookScheduler.__get_time_in_second(Constants.TIME_UNIT_HOUR, 0) - curr_time
-        else:
+        next_ticking = BookScheduler.__get_time_in_second(Constants.TIME_UNIT_HOUR, 0) - curr_time
+
+        if has_task_today:
             interval = self.timings.interval
             min_value = interval
 
@@ -78,7 +80,7 @@ class BookScheduler:
                 elif s_time > curr_time:
                     min_value = min(min_value, s_time - curr_time)
 
-            next_ticking = min(min_value, interval)
+            next_ticking = min(min_value, interval, next_ticking)
 
         self.logger.log('next ticking after %d seconds...' % next_ticking)
         self.timer = threading.Timer(next_ticking, self.run)

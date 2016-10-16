@@ -77,6 +77,7 @@ class BookHelper:
         :param str date_str:
         :param ReservationCandidate candidate:
         """
+        self.logger.log('attempt to book site on %s...' % date_str)
         all_status = self.get_status(date_str, candidate.get_sport_type())
         ret = False
         for site_list in all_status:
@@ -126,12 +127,15 @@ class BookHelper:
                         'cost': cost,
                         'curr_datetime': Common.format_datetime(datetime.now(), Common.DATETIME_PATTERN_YYYYMMDDHHMMSS)
                     }
-                    self.logger.log('sites booked successfully!', [
+                    self.logger.log('site(s) booked successfully!', [
                         'location: ' + ret['location'],
                         'book datetime: ' + ret['book_datetime'],
                         'owner: ' + ret['owner'],
                         'cost: ' + str(ret['cost']),
                     ])
+                else:
+                    self.logger.log('cannot book site(s)!')
+        self.logger.log('stop booking on %s...' % date_str)
         return ret
 
     def should_book(self, date_strings):
@@ -169,14 +173,26 @@ class BookHelper:
                 Constants.THU_STADIUM_STATUS_SEGMENTS).build()
             query = ViewQuery(stadium, sport_type, date_str, self.user)
             params = query.get_view_site_params()
-            r = self.session.get(url, params=params)
+            try:
+                r = self.session.get(url, params=params, timeout=Constants.REQUEST_TIMEOUT)
+            except requests.Timeout, _:
+                self.logger.log('fail to fetch status on ' + date_str + ' with timeout exceptions!')
+                continue
             site_list = SiteList(stadium, sport_type)
             site_list.parse(r.text)
             info.append(site_list)
-        self.status[date_str] = info
+            self.logger.log('stadium(%s) sites status below: ' % stadium.name)
+            for key, sites in site_list.time_table.iteritems():
+                details = ''
+                for site in sites:
+                    details += site.name + '(%s)' % site.field_id + ' '
+                self.logger.log('time section[%s, %s] remain %d site(s): %s' % (key[0], key[1], len(sites), details))
+        if info:
+            self.status[date_str] = info
         return info
 
     def clear_status(self):
+        self.logger.log('clear all old status...')
         self.status = None
 
     @staticmethod

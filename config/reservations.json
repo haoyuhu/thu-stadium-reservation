@@ -3,19 +3,43 @@
     {
       "available": true,
       "sport_type": "badminton",
+      "week": 2,
+      "wish": {
+        "start": "17:00",
+        "end": "18:30"
+      },
+      "length": 2,
+      "section": "evening",
+      "fixed": true
+    },
+    {
+      "available": true,
+      "sport_type": "badminton",
+      "week": 3,
+      "wish": {
+        "start": "17:00",
+        "end": "18:30"
+      },
+      "length": 2,
+      "section": "evening",
+      "fixed": true
+    },
+    {
+      "available": true,
+      "sport_type": "badminton",
       "week": 4,
       "wish": {
         "start": "17:00",
         "end": "18:30"
       },
-      "length": 3,
+      "length": 2,
       "section": "evening",
       "fixed": true
     }
   ],
   [
     {
-      "available": false,
+      "available": true,
       "sport_type": "badminton",
       "week": 5,
       "wish": {
