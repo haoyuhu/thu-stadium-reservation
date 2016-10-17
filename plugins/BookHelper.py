@@ -176,7 +176,7 @@ class BookHelper:
             try:
                 r = self.session.get(url, params=params, timeout=Constants.REQUEST_TIMEOUT)
             except requests.Timeout, _:
-                self.logger.log('fail to fetch status on ' + date_str + ' with timeout exceptions!')
+                self.logger.error('fail to fetch status on ' + date_str + ' with timeout exceptions!')
                 continue
             site_list = SiteList(stadium, sport_type)
             site_list.parse(r.text)

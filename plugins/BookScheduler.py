@@ -6,6 +6,7 @@ from config.Config import Config
 from utils.Common import Common
 from utils.Constants import Constants
 import threading
+import requests
 
 
 class BookScheduler:
@@ -31,27 +32,52 @@ class BookScheduler:
         tomorrow = Common.get_tomorrow()
         day_after_tomorrow = Common.get_day_after_tomorrow()
         more = Common.get_datetime_with_interval(3)
-        t_str = Common.format_date(tomorrow, Common.DATETIME_PATTERN_YYYYMMDD)
-        dat_str = Common.format_date(day_after_tomorrow, Common.DATETIME_PATTERN_YYYYMMDD)
-        more_str = Common.format_date(more, Common.DATETIME_PATTERN_YYYYMMDD)
-        date_strings = self.helper.should_book([t_str, dat_str, more_str])
+        all_dates = [Common.format_date(tomorrow, Common.DATETIME_PATTERN_YYYYMMDD),
+                     Common.format_date(day_after_tomorrow, Common.DATETIME_PATTERN_YYYYMMDD),
+                     Common.format_date(more, Common.DATETIME_PATTERN_YYYYMMDD)]
+        try:
+            date_strings = self.helper.should_book(all_dates)
+        except requests.exceptions.RequestException, _:
+            self.logger.error('cannot fetch records from 50.tsinghua with a network error, please check your network.')
+            date_strings = []
 
         has_task = False
         if date_strings:
+            # find dates occupied
+            occupied = []
+            for date_str in all_dates:
+                if date_str not in date_strings:
+                    occupied.append(date_str)
+
+            # filter completed tasks
+            curr_tasks = []
+            for task in self.tasks:
+                found = False
+                for candidate in task:
+                    for date_str in occupied:
+                        if candidate.is_available() and candidate.validate_date(date_str):
+                            found = True
+                            break
+                if not found:
+                    curr_tasks.append(task)
+
+            # attempt to book sites
             for date_str in date_strings:
-                for task in self.tasks:
+                for task in curr_tasks:
                     for candidate in task:
-                        if candidate.validate_date(date_str):
-                            if not candidate.is_available():
-                                continue
+                        if candidate.is_available() and candidate.validate_date(date_str):
                             has_task = True
-                            ret = self.helper.book(date_str, candidate)
-                            if ret:
-                                account = self.config.get_mail_account()
-                                receivers = self.config.get_mail_receivers()
-                                self.helper.notify_all(ret, account, receivers)
-                                self.__ticking(True)
-                                return
+                            try:
+                                ret = self.helper.book(date_str, candidate)
+                                if ret:
+                                    account = self.config.get_mail_account()
+                                    receivers = self.config.get_mail_receivers()
+                                    self.helper.notify_all(ret, account, receivers)
+                                    self.__ticking(True)
+                                    return
+                            except requests.exceptions.RequestException, _:
+                                self.logger.error('cannot book sites or send emails with a network error, '
+                                                  'please check your network.')
 
         self.__ticking(False, has_task)
 
