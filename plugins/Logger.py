@@ -27,3 +27,8 @@ class Logger(Singleton):
         self.logger.debug(title)
         for content in contents:
             self.logger.debug(content)
+
+    def error(self, title, contents=list()):
+        self.logger.error(title)
+        for content in contents:
+            self.logger.error(content)
