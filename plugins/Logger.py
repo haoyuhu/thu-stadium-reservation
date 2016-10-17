@@ -1,9 +1,8 @@
-from utils.Singleton import Singleton
 import logging
 
 
-class Logger(Singleton):
-    def __init__(self, debug):
+class Logger:
+    def __init__(self, debug, file_name):
         self.logger = logging.getLogger('thu-stadium-logger')
         if debug:
             level = logging.DEBUG
@@ -11,7 +10,7 @@ class Logger(Singleton):
             level = logging.ERROR
         self.logger.setLevel(level)
 
-        fh = logging.FileHandler('runtime.log')
+        fh = logging.FileHandler(file_name)
         fh.setLevel(level)
         ch = logging.StreamHandler()
         ch.setLevel(level)

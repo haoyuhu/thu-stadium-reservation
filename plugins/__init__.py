@@ -1,1 +1,1 @@
-__all__ = ['BookHelper', 'BookScheduler', 'JsonReader', 'MailSender', 'WinService']
+__all__ = ['BookHelper', 'BookScheduler', 'JsonReader', 'MailSender']

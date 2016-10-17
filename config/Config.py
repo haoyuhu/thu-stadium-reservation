@@ -20,7 +20,6 @@ class Config(Singleton):
     TIMINGS_FILE_NAME = 'timings.json'
 
     def __init__(self):
-        super(Config, self).__init__()
         self.default_cache = None
         self.accounts_cache = None
         self.stadiums_cache = None
@@ -45,13 +44,19 @@ class Config(Singleton):
                 self.accounts_cache[name] = user
         return self.accounts_cache
 
+    def get_default_config(self):
+        if self.default_cache is None:
+            self.default_cache = Config.read_configs(Config.get_curr_abs_path(Config.DEFAULT_CONFIG_FILE_NAME))
+        return self.default_cache
+
+    def get_log_file_name(self):
+        return self.get_curr_abs_path('runtime.log')
+
     def get_default_account(self):
         """
         :rtype: User
         """
-        if self.default_cache is None:
-            self.default_cache = Config.read_configs(Config.get_curr_abs_path(Config.DEFAULT_CONFIG_FILE_NAME))
-        default_user = self.default_cache['account']
+        default_user = self.get_default_config()['account']
         return self.get_accounts()[default_user]
 
     def get_logger(self):
@@ -59,8 +64,7 @@ class Config(Singleton):
         :rtype: Logger
         """
         if self.logger is None:
-            self.default_cache = Config.read_configs(Config.get_curr_abs_path(Config.DEFAULT_CONFIG_FILE_NAME))
-            self.logger = Logger(self.default_cache['debug'])
+            self.logger = Logger(self.get_default_config()['debug'], self.get_log_file_name())
         return self.logger
 
     def get_stadiums(self):
@@ -116,14 +120,10 @@ class Config(Singleton):
         return TimeInterval(section['start'], section['end'])
 
     def get_mail_account(self):
-        if self.default_cache is None:
-            self.default_cache = Config.read_configs(Config.get_curr_abs_path(Config.DEFAULT_CONFIG_FILE_NAME))
-        return self.default_cache['mail_account']
+        return self.get_default_config()['mail_account']
 
     def get_mail_receivers(self):
-        if self.default_cache is None:
-            self.default_cache = Config.read_configs(Config.get_curr_abs_path(Config.DEFAULT_CONFIG_FILE_NAME))
-        return self.default_cache['receivers']
+        return self.get_default_config()['receivers']
 
     @staticmethod
     def read_configs(path):
