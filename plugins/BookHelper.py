@@ -33,7 +33,7 @@ class BookHelper:
         self.status = None
 
     def login(self):
-        self.logger.log('attempt to log in tsinghua info platform...')
+        self.logger.log('attempt to log in tsinghua info platform with %s\'s account...' % self.user.name)
         url = UrlBuilder().schema(UrlBuilder.SCHEMA_HTTP).host(Constants.THU_INFO_HOST).build()
         self.session = requests.session()
         r = self.session.get(url)
