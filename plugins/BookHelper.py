@@ -133,6 +133,7 @@ class BookHelper:
                         'owner: ' + ret['owner'],
                         'cost: ' + str(ret['cost']),
                     ])
+                    break
                 else:
                     self.logger.log('cannot book site(s)!')
         self.logger.log('stop booking on %s...' % date_str)

@@ -39,7 +39,7 @@
   ],
   [
     {
-      "available": true,
+      "available": false,
       "sport_type": "badminton",
       "week": 5,
       "wish": {

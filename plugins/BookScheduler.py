@@ -29,6 +29,7 @@ class BookScheduler:
     def run(self):
         self.logger.log('thu-stadium-reservation ticking!')
 
+        has_task = False
         tomorrow = Common.get_tomorrow()
         day_after_tomorrow = Common.get_day_after_tomorrow()
         more = Common.get_datetime_with_interval(3)
@@ -38,10 +39,10 @@ class BookScheduler:
         try:
             date_strings = self.helper.should_book(all_dates)
         except requests.exceptions.RequestException, _:
+            has_task = True
             self.logger.error('cannot fetch records from 50.tsinghua with a network error, please check your network.')
             date_strings = []
-
-        has_task = False
+        
         if date_strings:
             # find dates occupied
             occupied = []
