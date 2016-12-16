@@ -15,8 +15,8 @@ import os
 class Config(Singleton):
     DEFAULT_CONFIG_FILE_NAME = 'default.json'
     ACCOUNTS_FILE_NAME = 'accounts.json'
+    RESERVATION_DIR = 'reservations'
     BASIS_FILE_NAME = 'basis.json'
-    RESERVATIONS_FILE_NAME = 'reservations.json'
     TIMINGS_FILE_NAME = 'timings.json'
 
     def __init__(self):
@@ -24,9 +24,8 @@ class Config(Singleton):
         self.accounts_cache = None
         self.stadiums_cache = None
         self.timings_cache = None
-        self.tasks_cache = None
+        self.settings_cache = None
         self.standard_sections_cache = None
-        self.logger = None
 
     def get_accounts(self):
         """
@@ -49,23 +48,20 @@ class Config(Singleton):
             self.default_cache = Config.read_configs(Config.get_curr_abs_path(Config.DEFAULT_CONFIG_FILE_NAME))
         return self.default_cache
 
-    def get_log_file_name(self):
-        return self.get_curr_abs_path('runtime.log')
+    def get_log_file_name(self, setting_name):
+        return self.get_curr_abs_path('runtime_%s.log' % setting_name)
 
-    def get_default_account(self):
+    def get_default_account(self, account_name):
         """
         :rtype: User
         """
-        default_user = self.get_default_config()['account']
-        return self.get_accounts()[default_user]
+        return self.get_accounts()[account_name]
 
-    def get_logger(self):
+    def get_logger(self, setting_name):
         """
         :rtype: Logger
         """
-        if self.logger is None:
-            self.logger = Logger(self.get_default_config()['debug'], self.get_log_file_name())
-        return self.logger
+        return Logger(self.get_default_config()['debug'], self.get_log_file_name(setting_name))
 
     def get_stadiums(self):
         """
@@ -91,23 +87,33 @@ class Config(Singleton):
         self.timings_cache = Timing.from_json(timings)
         return self.timings_cache
 
-    def get_reservation_tasks(self):
+    def get_reservation_settings(self):
         """
         :rtype: list
         """
-        if self.tasks_cache is not None:
-            return self.tasks_cache
+        if self.settings_cache is not None:
+            return self.settings_cache
 
-        tasks = Config.read_configs(Config.get_curr_abs_path(Config.RESERVATIONS_FILE_NAME))
-        self.tasks_cache = []
-        for l in tasks:
-            task = []
-            for obj in l:
-                candidate = ReservationCandidate.from_json(obj, self.get_standard_time_section(obj['section']))
-                task.append(candidate)
-            self.tasks_cache.append(task)
+        self.settings_cache = []
+        for root, _, files in os.walk(Config.get_curr_abs_path(Config.RESERVATION_DIR)):
+            for name in files:
+                setting = Config.read_configs(os.path.join(root, name))
+                setting_name = name.split('.')[0]
+                item = {
+                    'setting_name': setting_name,
+                    'tasks': [],
+                    'account': setting['account'],
+                    'receivers': setting['receivers']
+                }
+                for l in setting['reservations']:
+                    task = []
+                    for obj in l:
+                        candidate = ReservationCandidate.from_json(obj, self.get_standard_time_section(obj['section']))
+                        task.append(candidate)
+                    item['tasks'].append(task)
+                self.settings_cache.append(item)
 
-        return self.tasks_cache
+        return self.settings_cache
 
     def get_standard_time_section(self, section_name):
         """
@@ -122,8 +128,15 @@ class Config(Singleton):
     def get_mail_account(self):
         return self.get_default_config()['mail_account']
 
-    def get_mail_receivers(self):
-        return self.get_default_config()['receivers']
+    # noinspection PyTypeChecker
+    def get_mail_receivers(self, setting_name):
+        ret = []
+        ret.extend(self.get_default_config()['receivers'])
+        for item in self.get_reservation_settings():
+            if item['setting_name'] == setting_name:
+                ret.extend(item['receivers'])
+                break
+        return ret
 
     @staticmethod
     def read_configs(path):

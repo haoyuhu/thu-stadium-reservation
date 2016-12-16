@@ -1,6 +1,5 @@
 {
   "debug": true,
-  "account": "zhangshuhao",
   "mail_account": {
     "sender": "61902279@qq.com",
     "username": "61902279",
@@ -15,10 +14,6 @@
     {
       "nickname": "hahahu",
       "address": "im@huhaoyu.com"
-    },
-    {
-      "nickname": "zhangshuhao",
-      "address": "8180594@qq.com"
     }
   ],
   "unit": {

@@ -1,0 +1,75 @@
+{
+  "reservations": [
+    [
+      {
+        "available": true,
+        "sport_type": "badminton",
+        "week": 2,
+        "wish": {
+          "start": "17:00",
+          "end": "18:30"
+        },
+        "length": 2,
+        "section": "evening",
+        "fixed": true
+      },
+      {
+        "available": true,
+        "sport_type": "badminton",
+        "week": 3,
+        "wish": {
+          "start": "17:00",
+          "end": "18:30"
+        },
+        "length": 2,
+        "section": "evening",
+        "fixed": true
+      },
+      {
+        "available": true,
+        "sport_type": "badminton",
+        "week": 4,
+        "wish": {
+          "start": "17:00",
+          "end": "18:30"
+        },
+        "length": 2,
+        "section": "evening",
+        "fixed": true
+      }
+    ],
+    [
+      {
+        "available": false,
+        "sport_type": "badminton",
+        "week": 5,
+        "wish": {
+          "start": "20:00",
+          "end": "22:00"
+        },
+        "length": 2,
+        "section": "evening",
+        "fixed": false
+      },
+      {
+        "available": true,
+        "sport_type": "badminton",
+        "week": 6,
+        "wish": {
+          "start": "20:00",
+          "end": "22:00"
+        },
+        "length": 2,
+        "section": "evening",
+        "fixed": false
+      }
+    ]
+  ],
+  "account": "huhaoyu",
+  "receivers": [
+    {
+      "nickname": "hahahu",
+      "address": "hxdtc123@163.com"
+    }
+  ]
+}
