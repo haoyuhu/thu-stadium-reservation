@@ -11,7 +11,7 @@ from plugins.BookHelper import SectionIterator
 from plugins.BookHelper import BookHelper
 from plugins.MailSender import MailSender
 from plugins.Logger import Logger
-from config.Config import Config
+from configs.Config import Config
 from utils.Common import Common
 import datetime
 import os
@@ -59,7 +59,7 @@ def test_mail_sender():
 
     config = Config()
     account = config.get_mail_account()
-    receivers = config.get_mail_receivers()
+    receivers = config.get_mail_receivers('campus')
     sender = MailSender(account['sender'], account['username'], account['password'], account['host'], account['port'])
     receiver = receivers[0]
     title = account['title'] % (receiver['nickname'])
@@ -82,13 +82,28 @@ def test_config():
 
     config = Config()
     success = config.get_standard_time_section('morning') is not None
+    print config.get_standard_time_section('morning')
+
     success = success and config.get_mail_account() is not None
-    success = success and config.get_mail_receivers() is not None
+    print config.get_mail_account()
+
+    success = success and config.get_mail_receivers('campus') is not None
+    print config.get_mail_receivers('campus')
+
     success = success and config.get_accounts() is not None
-    success = success and config.get_default_account() is not None
+    print config.get_accounts()
+
+    success = success and config.get_default_account('lushenghan') is not None
+    print config.get_default_account('lushenghan')
+
     success = success and config.get_timings() is not None
+    print config.get_timings()
+
     success = success and config.get_stadiums() is not None
-    success = success and config.get_reservation_tasks() is not None
+    print config.get_stadiums()
+
+    success = success and config.get_reservation_settings() is not None
+    print config.get_reservation_settings()
 
     after(success)
 
@@ -150,8 +165,9 @@ def test_section_iterator():
 
 def test_book_helper():
     before('test book helper')
+    config = Config()
 
-    helper = BookHelper(Config().get_default_account())
+    helper = BookHelper(Config().get_default_account('huhaoyu'), config.get_stadiums(), config.get_logger('test'))
     success = helper.login()
 
     after(success)
@@ -160,7 +176,7 @@ def test_book_helper():
 def test_logger():
     before('test logger')
 
-    logger = Logger(True)
+    logger = Logger(True, 'logger_test.log')
     logger.log('test title with no content')
     logger.log('test title with contents', [
         'content1: detail1',
@@ -196,11 +212,11 @@ def get_test_folder():
 
 test_url_builder()
 test_site_category()
-# test_mail_sender()
+test_mail_sender()
 test_config()
 test_site_list()
 test_book_record()
 test_section_iterator()
-# test_book_helper()
+test_book_helper()
 test_logger()
 test_scheduler()
