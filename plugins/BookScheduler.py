@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from BookHelper import BookHelper
-from config.Config import Config
 from utils.Common import Common
 from utils.Constants import Constants
 import threading
@@ -13,18 +12,23 @@ class BookScheduler:
     DEFAULT_PRIORITY = 1
 
     def __init__(self):
-        self.config = Config()
         self.helper = None
         self.tasks = None
         self.timings = None
         self.logger = None
         self.timer = None
+        self.mail_sender = None
+        self.mail_receivers = None
+        self.stadiums = None
 
-    def init(self):
-        self.helper = BookHelper(self.config.get_default_account())
-        self.tasks = self.config.get_reservation_tasks()
-        self.timings = self.config.get_timings()
-        self.logger = self.config.get_logger()
+    def init(self, user, tasks, timings, logger, mail_sender, mail_receivers, stadiums):
+        self.helper = BookHelper(user, stadiums, logger)
+        self.tasks = tasks
+        self.timings = timings
+        self.logger = logger
+        self.mail_sender = mail_sender
+        self.mail_receivers = mail_receivers
+        self.stadiums = stadiums
 
     def run(self):
         self.logger.log('thu-stadium-reservation ticking!')
@@ -42,7 +46,7 @@ class BookScheduler:
             has_task = True
             self.logger.error('cannot fetch records from 50.tsinghua with a network error, please check your network.')
             date_strings = []
-        
+
         if date_strings:
             # find dates occupied
             occupied = []
@@ -71,9 +75,7 @@ class BookScheduler:
                             try:
                                 ret = self.helper.book(date_str, candidate)
                                 if ret:
-                                    account = self.config.get_mail_account()
-                                    receivers = self.config.get_mail_receivers()
-                                    self.helper.notify_all(ret, account, receivers)
+                                    self.helper.notify_all(ret, self.mail_sender, self.mail_receivers)
                                     self.__ticking(True)
                                     return
                             except requests.exceptions.RequestException, _:

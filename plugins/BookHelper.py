@@ -10,7 +10,6 @@ from entities.TimeInterval import TimeInterval
 from entities.BookQuery import BookQuery
 from entities.ReservationCandidate import ReservationCandidate
 from plugins.MailSender import MailSender
-from config.Config import Config
 from utils.Constants import Constants
 from utils.UrlBuilder import UrlBuilder
 from utils.Common import Common
@@ -20,14 +19,13 @@ from datetime import datetime
 
 
 class BookHelper:
-    def __init__(self, user):
+    def __init__(self, user, stadiums, logger):
         """
         :param User user:
         """
-        config = Config()
         self.user = user
-        self.stadiums = config.get_stadiums()
-        self.logger = config.get_logger()
+        self.stadiums = stadiums
+        self.logger = logger
         self.session = None
         self.records = None
         self.status = None
@@ -190,6 +188,7 @@ class BookHelper:
                 self.logger.log('time section[%s, %s] remain %d site(s): %s' % (key[0], key[1], len(sites), details))
         if info:
             self.status[date_str] = info
+
         return info
 
     def clear_status(self):

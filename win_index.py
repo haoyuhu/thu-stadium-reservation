@@ -4,7 +4,7 @@
 import win32service
 import win32serviceutil
 import win32event
-from plugins.BookScheduler import BookScheduler
+import index
 
 
 class BackendService(win32serviceutil.ServiceFramework):
@@ -20,8 +20,7 @@ class BackendService(win32serviceutil.ServiceFramework):
         win32serviceutil.ServiceFramework.__init__(self, args)
         # create an event to listen for stop requests on
         self.hWaitStop = win32event.CreateEvent(None, 0, 0, None)
-        self.scheduler = BookScheduler()
-        self.scheduler.init()
+        index.init_all_schedulers()
 
     # core logic of the service
     def SvcDoRun(self):
@@ -37,10 +36,10 @@ class BackendService(win32serviceutil.ServiceFramework):
         self.stop()
 
     def start(self):
-        self.scheduler.run()
+        index.start_all_schedulers()
 
     def stop(self):
-        self.scheduler.stop()
+        index.stop_all_schedulers()
 
 
 if __name__ == '__main__':
