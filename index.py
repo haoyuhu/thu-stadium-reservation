@@ -40,4 +40,5 @@ def stop_all_schedulers():
 
 
 if __name__ == "__main__":
+    init_all_schedulers()
     start_all_schedulers()
