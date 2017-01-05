@@ -9,7 +9,7 @@
           "start": "17:00",
           "end": "18:30"
         },
-        "length": 2,
+        "length": 120,
         "section": "evening",
         "fixed": true
       },
@@ -21,8 +21,8 @@
           "start": "17:00",
           "end": "18:30"
         },
-        "length": 2,
-        "section": "evening",
+        "length": 120,
+        "section": "13:00-17:00",
         "fixed": true
       },
       {
@@ -33,7 +33,7 @@
           "start": "17:00",
           "end": "18:30"
         },
-        "length": 2,
+        "length": 120,
         "section": "evening",
         "fixed": true
       }
@@ -47,7 +47,7 @@
           "start": "20:00",
           "end": "22:00"
         },
-        "length": 2,
+        "length": 120,
         "section": "evening",
         "fixed": false
       },
@@ -59,7 +59,7 @@
           "start": "20:00",
           "end": "22:00"
         },
-        "length": 2,
+        "length": 120,
         "section": "evening",
         "fixed": false
       }

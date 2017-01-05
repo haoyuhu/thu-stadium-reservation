@@ -215,7 +215,7 @@ class SectionIterator:
         :param TimeInterval section:
         :param int length:
         """
-        self.length = length * Constants.TIME_UNIT_MINUTE
+        self.length = length
         self.lower_bound = SectionIterator.decode(section.start) + self.length
         self.curr = SectionIterator.decode(section.end)
         self.step = step

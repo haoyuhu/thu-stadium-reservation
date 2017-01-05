@@ -123,7 +123,11 @@ class Config(Singleton):
             config = Config.read_configs(Config.get_curr_abs_path(Config.DEFAULT_CONFIG_FILE_NAME))
             self.standard_sections_cache = config['unit']['section']
         section = self.standard_sections_cache[section_name]
-        return TimeInterval(section['start'], section['end'])
+        if section is None:
+            se = section_name.split('-')
+            return TimeInterval(se[0], se[1])
+        else:
+            return TimeInterval(section['start'], section['end'])
 
     def get_mail_account(self):
         return self.get_default_config()['mail_account']
