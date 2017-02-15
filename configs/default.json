@@ -1,11 +1,11 @@
 {
   "debug": true,
   "mail_account": {
-    "sender": "61902279@qq.com",
-    "username": "61902279",
-    "password": "jymsxcuznczebihg",
+    "sender": "service@huhaoyu.com",
+    "username": "service@huhaoyu.com",
+    "password": "Service1513",
     "nickname": "badminton-group",
-    "host": "smtp.qq.com",
+    "host": "smtp.exmail.qq.com",
     "port": 465,
     "title": "[NEW RESERVATION] hello %s, this is a new badminton reservation",
     "content": "Location: %s;\nDatetime: %s;\nAccount: %s;\nCost: %.2f.\n\nMade by thu-stadium on %s"
@@ -13,7 +13,7 @@
   "receivers": [
     {
       "nickname": "hahahu",
-      "address": "im@huhaoyu.com"
+      "address": "subscribe@huhaoyu.com"
     }
   ],
   "unit": {
