@@ -3,6 +3,10 @@
 
 import time
 from datetime import datetime, timedelta
+from Crypto.Cipher import AES
+import binascii
+import hashlib
+import os
 
 
 class Common:
@@ -65,3 +69,21 @@ class Common:
         :rtype: datetime
         """
         return datetime.today() + timedelta(days=days)
+
+    @staticmethod
+    def encrypt_content_by_aes(content, secret):
+        encryptor = AES.new(secret)
+        encrypted = encryptor.encrypt(content)
+        return binascii.hexlify(encrypted)
+
+    @staticmethod
+    def decrypt_content_by_aes(encrypted, secret):
+        raw = binascii.unhexlify(encrypted)
+        decryptor = AES.new(secret)
+        decrypted = decryptor.decrypt(raw)
+        return decrypted
+
+    @staticmethod
+    def md5(content):
+        content = '' if content is None else content
+        return hashlib.md5(content).hexdigest()

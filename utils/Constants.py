@@ -18,6 +18,7 @@ class Constants:
         'student': 1,
         'teacher': 0
     }
+
     THU_INFO_HOST = 'info.tsinghua.edu.cn'
     THU_INFO_LOGIN_SEGMENTS = ['Login']
     THU_INFO_MAIN_PAGE_SEGMENTS = ['render.userLayoutRootNode.uP']
