@@ -2,8 +2,10 @@ import logging
 
 
 class Logger:
-    def __init__(self, debug, file_name):
-        self.logger = logging.getLogger('thu-stadium-logger')
+    def __init__(self, debug, file_name, logger_name):
+        # getLogger(logger_name) the same logger_name will return the same logger, so the logging info will be
+        # duplicated if using the same logger_name
+        self.logger = logging.getLogger('thu-stadium-logger(%s)' % logger_name)
         if debug:
             level = logging.DEBUG
         else:

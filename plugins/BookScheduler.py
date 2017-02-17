@@ -11,27 +11,22 @@ import requests
 class BookScheduler:
     DEFAULT_PRIORITY = 1
 
-    def __init__(self):
-        self.helper = None
-        self.tasks = None
-        self.timings = None
-        self.logger = None
-        self.timer = None
-        self.mail_sender = None
-        self.mail_receivers = None
-        self.stadiums = None
+    def __init__(self, user, tasks, timings, logger, stadiums, send_mail, **kwargs):
+        self.__helper = BookHelper(user, stadiums, logger)
+        self.__tasks = tasks
+        self.__timings = timings
+        self.__logger = logger
+        self.__stadiums = stadiums
+        self.__send_mail = send_mail
+        self.__timer = None
 
-    def init(self, user, tasks, timings, logger, mail_sender, mail_receivers, stadiums):
-        self.helper = BookHelper(user, stadiums, logger)
-        self.tasks = tasks
-        self.timings = timings
-        self.logger = logger
-        self.mail_sender = mail_sender
-        self.mail_receivers = mail_receivers
-        self.stadiums = stadiums
+        self.__mail_sender = kwargs.get('mail_sender')
+        self.__mail_receivers = kwargs.get('mail_receivers')
+        self.__group_ids = kwargs.get('group_ids')
+        self.__open_ids = kwargs.get('open_ids')
 
     def run(self):
-        self.logger.log('thu-stadium-reservation ticking!')
+        self.__logger.log('book scheduler ticking!')
 
         has_task = False
         tomorrow = Common.get_tomorrow()
@@ -41,10 +36,11 @@ class BookScheduler:
                      Common.format_date(day_after_tomorrow, Common.DATETIME_PATTERN_YYYYMMDD),
                      Common.format_date(more, Common.DATETIME_PATTERN_YYYYMMDD)]
         try:
-            date_strings = self.helper.should_book(all_dates)
+            date_strings = self.__helper.should_book(all_dates)
         except requests.exceptions.RequestException, _:
             has_task = True
-            self.logger.error('cannot fetch records from 50.tsinghua with a network error, please check your network.')
+            self.__logger.error(
+                'cannot fetch records from 50.tsinghua with a network error, please check your network.')
             date_strings = []
 
         if date_strings:
@@ -56,7 +52,10 @@ class BookScheduler:
 
             # filter completed tasks
             curr_tasks = []
-            for task in self.tasks:
+            curr_open_ids = []
+            curr_group_ids = []
+            for i in xrange(len(self.__tasks)):
+                task = self.__tasks[i]
                 found = False
                 for candidate in task:
                     for date_str in occupied:
@@ -65,37 +64,44 @@ class BookScheduler:
                             break
                 if not found:
                     curr_tasks.append(task)
+                    curr_open_ids.append(self.__open_ids[i] if self.__open_ids is not None else None)
+                    curr_group_ids.append(self.__group_ids[i] if self.__group_ids is not None else None)
 
             # attempt to book sites
             for date_str in date_strings:
-                for task in curr_tasks:
+                for i in xrange(len(curr_tasks)):
+                    task = curr_tasks[i]
                     for candidate in task:
                         if candidate.is_available() and candidate.validate_date(date_str):
                             has_task = True
                             try:
-                                ret = self.helper.book(date_str, candidate)
+                                ret = self.__helper.book(date_str, candidate)
                                 if ret:
-                                    self.helper.notify_all(ret, self.mail_sender, self.mail_receivers)
+                                    self.__send_mail(ret,
+                                                     mail_sender=self.__mail_sender,
+                                                     mail_receivers=self.__mail_receivers,
+                                                     group_id=curr_group_ids[i],
+                                                     open_id=curr_open_ids[i])
                                     self.__ticking(True)
                                     return
                             except requests.exceptions.RequestException, _:
-                                self.logger.error('cannot book sites or send emails with a network error, '
-                                                  'please check your network.')
+                                self.__logger.error('cannot book sites or send emails with a network error, '
+                                                    'please check your network.')
 
         self.__ticking(False, has_task)
 
     def __ticking(self, book_result, has_task_today=True):
-        self.helper.clear_status()
+        self.__helper.clear_status()
         now = Common.get_today()
         curr_time = BookScheduler.__get_time_in_second(now.hour, now.minute, now.second)
 
         next_ticking = BookScheduler.__get_time_in_second(Constants.TIME_UNIT_HOUR, 0) - curr_time
 
         if has_task_today:
-            interval = self.timings.interval
+            interval = self.__timings.interval
             min_value = interval
 
-            for item in self.timings.specials:
+            for item in self.__timings.specials:
                 shm = item.start.split(':')
                 ehm = item.end.split(':')
                 s_time = BookScheduler.__get_time_in_second(int(shm[0]), int(shm[1]))
@@ -111,18 +117,23 @@ class BookScheduler:
 
             next_ticking = min(min_value, interval, next_ticking)
 
-        self.logger.log('next ticking after %d seconds...' % next_ticking)
-        self.timer = threading.Timer(next_ticking, self.run)
-        self.timer.start()
-        self.logger.log('ticking down...')
+        self.__logger.log('next ticking after %d seconds...' % next_ticking)
+        self.__timer = threading.Timer(next_ticking, self.run)
+        self.__timer.start()
+        self.__logger.log('ticking down...')
 
     def start(self):
         self.run()
 
     def stop(self):
-        if self.timer is not None:
-            self.timer.cancel()
-            self.timer = None
+        if self.__timer is not None:
+            self.__timer.cancel()
+            self.__timer = None
+
+    def is_alive(self):
+        if self.__timer is None:
+            return False
+        return self.__timer.is_alive()
 
     @staticmethod
     def __get_time_in_second(hour, minute, second=0):

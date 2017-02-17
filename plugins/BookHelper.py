@@ -9,13 +9,9 @@ from entities.SiteList import SiteList
 from entities.TimeInterval import TimeInterval
 from entities.BookQuery import BookQuery
 from entities.ReservationCandidate import ReservationCandidate
-from plugins.MailSender import MailSender
 from utils.Constants import Constants
 from utils.UrlBuilder import UrlBuilder
-from utils.Common import Common
 import requests
-import calendar
-from datetime import datetime
 
 
 class BookHelper:
@@ -59,6 +55,11 @@ class BookHelper:
 
     def get_records(self):
         self.logger.log('now start to get reservation records...')
+        if not self.stadiums:
+            self.logger.log('stadiums is empty, cannot fetch records...')
+            self.records = None
+            return
+
         url = UrlBuilder().schema(UrlBuilder.SCHEMA_HTTP).host(Constants.THU_STADIUM_HOST) \
             .segments(Constants.THU_STADIUM_MAIN_SEGMENTS).build()
         params = ViewQuery.get_view_reservation_params(self.stadiums[Stadium.AIR_STADIUM])
@@ -95,41 +96,22 @@ class BookHelper:
                     Constants.THU_STADIUM_BOOK_ACTION_SEGMENTS).build()
                 self.session.post(url, data=data, params=params)
                 if not self.should_book([date_str]):
-                    stadium_name = query.stadium.name
-                    site_name = ''
-                    cost = 0.0
-                    book_start = None
-                    book_end = None
-                    book_date = query.date
+                    ret = []
                     for field in query.fields:
-                        if not site_name.endswith(field.name):
-                            site_name += ' ' + field.name
-                        cost += field.cost
-                        if book_start is None:
-                            book_start = SectionIterator.decode(field.start)
-                        else:
-                            book_start = min(book_start, SectionIterator.decode(field.start))
-                        if book_end is None:
-                            book_end = SectionIterator.decode(field.end)
-                        else:
-                            book_end = max(book_end, SectionIterator.decode(field.end))
-                    book_time = TimeInterval(SectionIterator.encode(book_start),
-                                             SectionIterator.encode(book_end)).get_section_str()
-                    ymd = query.date.split('-')
-                    index = calendar.weekday(int(ymd[0]), int(ymd[1]), int(ymd[2]))
-                    weekday = Constants.WEEK_NAMES_EN[index]
-                    ret = {
-                        'location': stadium_name + site_name,
-                        'book_datetime': book_date + ' ' + weekday + ' ' + book_time,
-                        'owner': query.user.name,
-                        'cost': cost,
-                        'curr_datetime': Common.format_datetime(datetime.now(), Common.DATETIME_PATTERN_YYYYMMDDHHMMSS)
-                    }
+                        item = {
+                            'stadium_name': query.stadium.name,
+                            'site_name': field.name,
+                            'start_time_str': field.start,
+                            'end_time_str': field.end,
+                            'query_date': query.date,
+                            'thu_account': query.user.name,
+                            'cost': field.cost
+                        }
+                        ret.append(item)
                     self.logger.log('site(s) booked successfully!', [
-                        'location: ' + ret['location'],
-                        'book datetime: ' + ret['book_datetime'],
-                        'owner: ' + ret['owner'],
-                        'cost: ' + str(ret['cost']),
+                        'location: ' + query.stadium.name,
+                        'book date: ' + query.date,
+                        'owner: ' + query.user.name,
                     ])
                     break
                 else:
@@ -194,17 +176,6 @@ class BookHelper:
     def clear_status(self):
         self.logger.log('clear all old status...')
         self.status = None
-
-    @staticmethod
-    def notify_all(info, account, receivers):
-        sender = MailSender(account['sender'], account['username'], account['password'], account['host'],
-                            account['port'])
-        content = account['content'] % (info['location'], info['book_datetime'], info['owner'], info['cost'],
-                                        info['curr_datetime'])
-
-        for receiver in receivers:
-            title = account['title'] % (receiver['nickname'])
-            sender.send(receiver, title, content, account['nickname'])
 
 
 class SectionIterator:
