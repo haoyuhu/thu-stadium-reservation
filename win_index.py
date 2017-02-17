@@ -20,7 +20,6 @@ class BackendService(win32serviceutil.ServiceFramework):
         win32serviceutil.ServiceFramework.__init__(self, args)
         # create an event to listen for stop requests on
         self.hWaitStop = win32event.CreateEvent(None, 0, 0, None)
-        index.init_all_schedulers()
 
     # core logic of the service
     def SvcDoRun(self):
@@ -36,10 +35,10 @@ class BackendService(win32serviceutil.ServiceFramework):
         self.stop()
 
     def start(self):
-        index.start_all_schedulers()
+        index.start_scheduler()
 
     def stop(self):
-        index.stop_all_schedulers()
+        index.stop_scheduler()
 
 
 if __name__ == '__main__':
