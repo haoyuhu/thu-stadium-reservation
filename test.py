@@ -11,7 +11,7 @@ from plugins.BookHelper import SectionIterator
 from plugins.BookHelper import BookHelper
 from plugins.MailSender import MailSender
 from plugins.Logger import Logger
-from configs.Config import Config
+from configs.Config import LocalConfig, RemoteConfig
 from utils.Common import Common
 import datetime
 import os
@@ -57,7 +57,7 @@ def test_site_category():
 def test_mail_sender():
     before('test mail sender')
 
-    config = Config()
+    config = LocalConfig()
     account = config.get_mail_account()
     receivers = config.get_mail_receivers('campus')
     sender = MailSender(account['sender'], account['username'], account['password'], account['host'], account['port'])
@@ -77,10 +77,10 @@ def test_mail_sender():
     after(success)
 
 
-def test_config():
-    before('test config')
+def test_local_config():
+    before('test local config')
 
-    config = Config()
+    config = LocalConfig()
     success = config.get_standard_time_section('morning') is not None
     print config.get_standard_time_section('morning')
 
@@ -93,8 +93,8 @@ def test_config():
     success = success and config.get_accounts() is not None
     print config.get_accounts()
 
-    success = success and config.get_default_account('lushenghan') is not None
-    print config.get_default_account('lushenghan')
+    success = success and config.get_default_account('huhaoyu') is not None
+    print config.get_default_account('huhaoyu')
 
     success = success and config.get_timings() is not None
     print config.get_timings()
@@ -108,10 +108,20 @@ def test_config():
     after(success)
 
 
+def test_remote_config():
+    before('test remote config')
+
+    config = RemoteConfig()
+    stadiums = config.get_stadiums()
+    settings = config.get_reservation_settings()
+
+    after(stadiums is not None and settings is not None)
+
+
 def test_site_list():
     before('test site list')
 
-    config = Config()
+    config = LocalConfig()
     success = True
 
     stadiums = config.get_stadiums()
@@ -153,7 +163,7 @@ def test_book_record():
 def test_section_iterator():
     before('test section iterator')
 
-    iterator = SectionIterator(TimeInterval('14:00', '22:00'), 2)
+    iterator = SectionIterator(TimeInterval('14:00', '22:00'), 120)
     count = 0
     while iterator.has_next():
         count += 1
@@ -165,9 +175,9 @@ def test_section_iterator():
 
 def test_book_helper():
     before('test book helper')
-    config = Config()
+    config = LocalConfig()
 
-    helper = BookHelper(Config().get_default_account('huhaoyu'), config.get_stadiums(), config.get_logger('test'))
+    helper = BookHelper(LocalConfig().get_default_account('huhaoyu'), config.get_stadiums(), config.get_logger('test'))
     success = helper.login()
 
     after(success)
@@ -176,7 +186,7 @@ def test_book_helper():
 def test_logger():
     before('test logger')
 
-    logger = Logger(True, 'logger_test.log')
+    logger = Logger(True, 'logger_test.log', 'test')
     logger.log('test title with no content')
     logger.log('test title with contents', [
         'content1: detail1',
@@ -212,11 +222,12 @@ def get_test_folder():
 
 test_url_builder()
 test_site_category()
-test_mail_sender()
-test_config()
+# test_mail_sender()
+test_local_config()
+test_remote_config()
 test_site_list()
 test_book_record()
 test_section_iterator()
-test_book_helper()
-test_logger()
+# test_book_helper()
+# test_logger()
 test_scheduler()
