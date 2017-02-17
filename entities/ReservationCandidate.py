@@ -53,17 +53,3 @@ class ReservationCandidate:
         :rtype: TimeInterval
         """
         return self.section
-
-    @staticmethod
-    def from_json(obj, section):
-        """
-        :rtype: ReservationCandidate
-        """
-        return ReservationCandidate(
-            obj['available'],
-            obj['sport_type'],
-            obj['week'],
-            TimeInterval(obj['wish']['start'], obj['wish']['end']),
-            obj['length'],
-            section,
-            obj['fixed'])

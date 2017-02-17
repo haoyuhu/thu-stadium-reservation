@@ -13,7 +13,7 @@ class Stadium:
     PINGPONG = 'pingpong'
     BASKETBALL = 'basketball'
 
-    def __init__(self, name, gymnasium_id, badminton, pingpong, basketball):
+    def __init__(self, name, gymnasium_id, badminton=None, pingpong=None, basketball=None):
         """
         create stadium
         :param str name: string
@@ -54,10 +54,3 @@ class Stadium:
         elif sport_type == Stadium.BASKETBALL:
             return self.basketball
         return None
-
-    @staticmethod
-    def from_json(obj):
-        badminton = SiteCategory.from_json(obj['sites']['badminton'])
-        pingpong = SiteCategory.from_json(obj['sites']['pingpong'])
-        basketball = SiteCategory.from_json(obj['sites']['basketball'])
-        return Stadium(obj['name'], obj['gymnasium_id'], badminton, pingpong, basketball)

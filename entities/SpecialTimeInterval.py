@@ -11,7 +11,3 @@ class SpecialTimeInterval(TimeInterval):
 
     def get_interval(self):
         return self.interval
-
-    @staticmethod
-    def from_json(obj):
-        return SpecialTimeInterval(obj['interval'], obj['start'], obj['end'])

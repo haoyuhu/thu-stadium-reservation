@@ -15,7 +15,3 @@ class SiteCategory:
 
     def get_id(self):
         return self.sport_id
-
-    @staticmethod
-    def from_json(obj):
-        return SiteCategory(obj['id'], obj['exceptions'])
