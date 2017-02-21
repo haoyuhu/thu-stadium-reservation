@@ -55,6 +55,7 @@ class MasterScheduler(object):
         if stadiums and settings:
             # delete settings whose sig was changed or settings that have been removed
             names = [s['setting_name'] for s in settings]
+            self.__logger.log('current setting names fetched from server: ' + ','.join(names))
             signatures = [s.get('signature') for s in settings]
             for key in self.__schedulers.keys():
                 if (key not in names) or (self.remote and self.__signatures.get(key) not in signatures):
