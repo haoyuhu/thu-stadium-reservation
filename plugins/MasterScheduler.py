@@ -48,6 +48,8 @@ class MasterScheduler(object):
         for key in self.__schedulers.keys():
             s = self.__schedulers.get(key)
             if s is None or not s.is_alive():
+                if s:
+                    s.stop()
                 self.__schedulers.pop(key)
                 if self.remote:
                     self.__signatures.pop(key)

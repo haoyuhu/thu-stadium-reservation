@@ -129,7 +129,7 @@ class BookScheduler:
         if self.__logger is not None:
             self.__logger.close_all()
 
-        if self.__timer is not None:
+        if self.is_alive():
             self.__timer.cancel()
             self.__timer = None
 
