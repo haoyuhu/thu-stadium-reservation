@@ -199,6 +199,12 @@ class RemoteConfig(Config):
     def __get_secrets(self):
         return self._read_configs(self._get_curr_abs_path(self.SECRET_FILE_NAME))
 
+    def get_secret_id(self):
+        return self.__get_secrets().get('secret_id')
+
+    def get_secret_key(self):
+        return self.__get_secrets().get('secret_key')
+
     def get_reservation_settings(self):
         data = self.service.get_reservation_list()
         if not data:

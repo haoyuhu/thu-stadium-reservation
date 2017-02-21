@@ -180,7 +180,7 @@ class MasterScheduler(object):
         return int(time.mktime(array)) * Constants.TIME_UNIT_MILLIS
 
     def __notify_all_by_remote_sender(self, record_list, group_id, open_id):
-        service = RemoteService(self.__remote_config.SECRET_ID, self.__remote_config.SECRET_KEY)
+        service = RemoteService(self.__remote_config.get_secret_id(), self.__remote_config.get_secret_key())
         service.send_mail(open_id=open_id, group_id=group_id, record_list=record_list)
 
     @staticmethod
