@@ -8,15 +8,18 @@ import json
 
 class RemoteService(object):
     SCHEMA = UrlBuilder.SCHEMA_HTTPS
+    # SCHEMA = UrlBuilder.SCHEMA_HTTP
     HOST = 'thu.stadium.huhaoyu.com'
+    # HOST = 'localhost:8080'
     STADIUM_SEGMENTS = ['stadium']
     LIST_SEGMENTS = ['task', 'list']
     MAIL_SEGMENTS = ['task', 'notify']
 
-    def __init__(self, secret_id, secret_key):
+    def __init__(self, secret_id, secret_key, aes_iv):
         super(RemoteService, self).__init__()
         self.secret_id = secret_id
         self.secret_key = secret_key
+        self.aes_iv = aes_iv
 
     def get_stadiums(self):
         url = UrlBuilder().schema(self.SCHEMA).host(self.HOST).segments(self.STADIUM_SEGMENTS).build()
@@ -32,19 +35,14 @@ class RemoteService(object):
             params = self.__create_query_params_with_token()
             response = requests.get(url=url, params=params)
             encrypted = self.__get_data_from_response(response)
-            # delete useless '\0' which added by aes decryption
             if encrypted:
-                json_string = Common.decrypt_content_by_aes(encrypted, self.secret_key)
-                for i in xrange(len(json_string) - 1, 0, -1):
-                    if json_string[i] == '}' or json_string[i] == ']':
-                        json_string = json_string[:i + 1]
-                        break
+                json_string = Common.decrypt_content_by_aes(encrypted, self.secret_key, self.aes_iv)
                 return json.loads(json_string)
         return False
 
     def send_mail(self, open_id, group_id, record_list):
         json_string = json.dumps(record_list)
-        encrypted = Common.encrypt_content_by_aes(json_string, self.secret_key)
+        encrypted = Common.encrypt_content_by_aes(json_string, self.secret_key, self.aes_iv)
         params = {
             'open_id': open_id,
             'group_id': group_id,

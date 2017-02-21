@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 from Crypto.Cipher import AES
 import binascii
 import hashlib
-import os
 
 
 class Common:
@@ -71,17 +70,24 @@ class Common:
         return datetime.today() + timedelta(days=days)
 
     @staticmethod
-    def encrypt_content_by_aes(content, secret):
-        encryptor = AES.new(secret)
-        encrypted = encryptor.encrypt(content)
+    def encrypt_content_by_aes(content, secret, aes_iv):
+        def add_padding_to_content_with_block_size(s):
+            block_size = AES.block_size
+            return s + (block_size - len(s) % block_size) * chr(block_size - len(s) % block_size)
+
+        encryptor = AES.new(secret, AES.MODE_CBC, IV=aes_iv)
+        encrypted = encryptor.encrypt(add_padding_to_content_with_block_size(content))
         return binascii.hexlify(encrypted)
 
     @staticmethod
-    def decrypt_content_by_aes(encrypted, secret):
+    def decrypt_content_by_aes(encrypted, secret, aes_iv):
+        def remove_padding_to_content_with_block_size(s):
+            return s[0: -ord(s[-1])]
+
         raw = binascii.unhexlify(encrypted)
-        decryptor = AES.new(secret)
+        decryptor = AES.new(secret, AES.MODE_CBC, IV=aes_iv)
         decrypted = decryptor.decrypt(raw)
-        return decrypted
+        return remove_padding_to_content_with_block_size(decrypted)
 
     @staticmethod
     def md5(content):

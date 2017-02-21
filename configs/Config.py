@@ -45,7 +45,10 @@ class Config(Singleton):
         """
         :rtype: Logger
         """
-        return Logger(self._get_default_config()['debug'], self._get_log_file_name(setting_name), setting_name)
+        return Logger(self.is_debug(), self._get_log_file_name(setting_name), setting_name)
+
+    def is_debug(self):
+        return self._get_default_config()['debug']
 
     def get_timings(self):
         """
@@ -178,8 +181,7 @@ class LocalConfig(Config):
 
 
 class RemoteConfig(Config):
-    SECRET_ID = '34d2f717f459380f5567aebb51a43ce0'
-    SECRET_KEY = '10c44d0dd1e0c90d'
+    SECRET_FILE_NAME = 'secrets.json'
     SPORT_TYPE = {
         0: 'badminton',
         1: 'pingpong',
@@ -188,7 +190,14 @@ class RemoteConfig(Config):
 
     def __init__(self):
         super(RemoteConfig, self).__init__()
-        self.service = RemoteService(self.SECRET_ID, self.SECRET_KEY)
+        secrets = self.__get_secrets()
+        self.service = RemoteService(
+            secret_id=secrets.get('secret_id', ''),
+            secret_key=secrets.get('secret_key', ''),
+            aes_iv=secrets.get('aes_iv', ''))
+
+    def __get_secrets(self):
+        return self._read_configs(self._get_curr_abs_path(self.SECRET_FILE_NAME))
 
     def get_reservation_settings(self):
         data = self.service.get_reservation_list()
