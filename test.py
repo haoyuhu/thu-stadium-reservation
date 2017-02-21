@@ -114,8 +114,29 @@ def test_remote_config():
     config = RemoteConfig()
     stadiums = config.get_stadiums()
     settings = config.get_reservation_settings()
+    records = [
+        {
+            'stadium_name': '气膜馆',
+            'site_name': '羽6',
+            'start_time': 1487671200000,
+            'end_time': 1487674800000,
+            'thu_account': 'hhy14',
+            'cost': 20.0,
+            'description': ''
+        }, {
+            'stadium_name': '气膜馆',
+            'site_name': '羽8',
+            'start_time': 1487674800000,
+            'end_time': 1487678400000,
+            'thu_account': 'hhy14',
+            'cost': 20.0,
+            'description': ''
+        }
+    ]
 
-    after(stadiums is not None and settings is not None)
+    result = config.service.send_mail(open_id='oTU370P4YKBbRNE4A0y8MvYWU2Kc', group_id=17, record_list=records)
+
+    after(stadiums is not None and settings is not None and result)
 
 
 def test_site_list():
@@ -212,6 +233,21 @@ def test_scheduler():
     after(True)
 
 
+def test_decryption_and_encryption():
+    before('test decryption and encryption')
+
+    content = 'hello world, foobar'
+    secret = '1234567890123456'
+    iv = '1234560123456789'
+    print 'origin content: ' + content
+    encrypted = Common.encrypt_content_by_aes(content=content, secret=secret, aes_iv=iv)
+    print 'encrypted: ' + encrypted
+    decrypted = Common.decrypt_content_by_aes(encrypted=encrypted, secret=secret, aes_iv=iv)
+    print 'decrypted: ' + decrypted
+
+    after(decrypted == content)
+
+
 def get_test_folder():
     return os.getcwd() + os.sep + 'tests'
 
@@ -220,14 +256,15 @@ def get_test_folder():
 # run tests
 # -----------------------
 
-test_url_builder()
-test_site_category()
+# test_url_builder()
+# test_site_category()
 # test_mail_sender()
-test_local_config()
-test_remote_config()
-test_site_list()
-test_book_record()
-test_section_iterator()
+# test_local_config()
+# test_remote_config()
+# test_site_list()
+# test_book_record()
+# test_section_iterator()
 # test_book_helper()
 # test_logger()
-test_scheduler()
+# test_scheduler()
+# test_decryption_and_encryption()
