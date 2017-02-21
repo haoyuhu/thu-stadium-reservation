@@ -205,6 +205,9 @@ class RemoteConfig(Config):
     def get_secret_key(self):
         return self.__get_secrets().get('secret_key')
 
+    def get_aes_iv(self):
+        return self.__get_secrets().get('aes_iv')
+
     def get_reservation_settings(self):
         data = self.service.get_reservation_list()
         if not data:

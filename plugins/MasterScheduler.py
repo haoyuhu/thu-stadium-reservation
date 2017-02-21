@@ -4,6 +4,7 @@ import sys
 import time
 import threading
 import requests
+import logging
 
 from plugins.BookHelper import SectionIterator
 from plugins.MailSender import MailSender
@@ -91,6 +92,8 @@ class MasterScheduler(object):
         # ticking if using remote config
         if self.remote:
             self.__ticking()
+        else:
+            self.__logger.close_all()
 
     def stop(self):
         for scheduler in self.__schedulers.values():
@@ -99,6 +102,10 @@ class MasterScheduler(object):
         self.__signatures.clear()
         self.__timer.cancel()
         self.__timer = None
+
+        # shutdown loggers
+        self.__logger.close_all()
+        logging.shutdown()
 
     def is_alive(self):
         if self.__timer is None:
@@ -180,7 +187,8 @@ class MasterScheduler(object):
         return int(time.mktime(array)) * Constants.TIME_UNIT_MILLIS
 
     def __notify_all_by_remote_sender(self, record_list, group_id, open_id):
-        service = RemoteService(self.__remote_config.get_secret_id(), self.__remote_config.get_secret_key())
+        service = RemoteService(self.__remote_config.get_secret_id(), self.__remote_config.get_secret_key(),
+                                self.__remote_config.get_aes_iv())
         service.send_mail(open_id=open_id, group_id=group_id, record_list=record_list)
 
     @staticmethod

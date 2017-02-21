@@ -126,6 +126,9 @@ class BookScheduler:
         self.run()
 
     def stop(self):
+        if self.__logger is not None:
+            self.__logger.close_all()
+
         if self.__timer is not None:
             self.__timer.cancel()
             self.__timer = None

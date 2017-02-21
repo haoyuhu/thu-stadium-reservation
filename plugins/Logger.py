@@ -12,24 +12,40 @@ class Logger:
             level = logging.ERROR
         self.logger.setLevel(level)
 
-        fh = logging.FileHandler(file_name)
-        fh.setLevel(level)
-        ch = logging.StreamHandler()
-        ch.setLevel(level)
+        self.file_handler = logging.FileHandler(file_name)
+        self.file_handler.setLevel(level)
+        self.stream_handler = logging.StreamHandler()
+        self.stream_handler.setLevel(level)
 
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        fh.setFormatter(formatter)
-        ch.setFormatter(formatter)
+        self.file_handler.setFormatter(formatter)
+        self.stream_handler.setFormatter(formatter)
 
-        self.logger.addHandler(fh)
-        self.logger.addHandler(ch)
+        self.logger.addHandler(self.file_handler)
+        self.logger.addHandler(self.stream_handler)
 
     def log(self, title, contents=list()):
+        if not self.logger:
+            return
+
         self.logger.debug(title)
         for content in contents:
             self.logger.debug(content)
 
     def error(self, title, contents=list()):
+        if not self.logger:
+            return
+
         self.logger.error(title)
         for content in contents:
             self.logger.error(content)
+
+    # remove all handlers when the logger closed
+    def close_all(self):
+        self.file_handler.close()
+        self.stream_handler.close()
+        self.logger.removeHandler(self.file_handler)
+        self.logger.removeHandler(self.stream_handler)
+        self.file_handler = None
+        self.stream_handler = None
+        self.logger = None
