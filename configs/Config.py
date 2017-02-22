@@ -210,7 +210,7 @@ class RemoteConfig(Config):
 
     def get_reservation_settings(self):
         data = self.service.get_reservation_list()
-        if not data:
+        if data is False:
             return False
 
         settings = []
@@ -260,7 +260,7 @@ class RemoteConfig(Config):
 
     def get_stadiums(self):
         data = self.service.get_stadiums()
-        if not data:
+        if data is False:
             return False
 
         stadium_map = {}
