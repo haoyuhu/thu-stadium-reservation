@@ -36,13 +36,13 @@ class MasterScheduler(object):
 
         config = self.__get_config()
         timings = config.get_timings()
-        stadiums = []
-        settings = []
         try:
             stadiums = config.get_stadiums()
             settings = config.get_reservation_settings()
         except requests.exceptions.RequestException, _:
             self.__logger.log('network error on fetching stadiums or settings from remote configuration server!')
+            stadiums = False
+            settings = False
 
         # remove schedulers which is not alive
         for key in self.__schedulers.keys():
@@ -55,7 +55,7 @@ class MasterScheduler(object):
                     self.__signatures.pop(key)
 
         # skip when network error
-        if stadiums and settings:
+        if stadiums is not False and settings is not False:
             # delete settings whose sig was changed or settings that have been removed
             names = [s['setting_name'] for s in settings]
             self.__logger.log('current setting names fetched from server: ' + ','.join(names))
