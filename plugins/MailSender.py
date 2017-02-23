@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import smtplib
+import smtplib, socket
 from email.mime.text import MIMEText
 from email.header import Header
 
@@ -21,13 +21,13 @@ class MailSender:
         message['Subject'] = Header(title, 'utf-8')
 
         try:
-            smtp = smtplib.SMTP_SSL()
+            smtp = smtplib.SMTP_SSL(timeout=3)
             smtp.connect(self.host, self.port)
             smtp.login(self.username, self.password)
             smtp.sendmail(self.sender, receiver['address'], message.as_string())
             smtp.quit()
             return True
-        except smtplib.SMTPException, e:
+        except (smtplib.SMTPException, socket.timeout), e:
             print e
             return False
 
